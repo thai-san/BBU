@@ -1,0 +1,133 @@
+{include file='header.html' title='Student'}
+<div class="navbar navbar-bbu navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle navbar-toggle-bbu" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fa fa-bars fa-bbu"></i>
+            </button>
+            <a class="navbar-brand" href="#"><span class="limon">{$student.STUDENT_NAME_IN_KHMER}</span></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <form class="navbar-form navbar-right" role="form">
+                <div class="form-group">
+                    <input type="text" placeholder="ID" class="form-control input-sm" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" class="form-control input-sm" required>
+                </div>
+                <button type="submit" class="btn btn-success input-sm">Login</button>
+            </form>
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</div>
+
+<div class="container">
+
+    <ul class="nav nav-tabs" id="student-info">
+        <li><a href="#personal" data-toggle="tab">Personal</a></li>
+        <li><a href="#personal_contact" data-toggle="tab">Personal Contact</a></li>
+        <li><a href="#relative_contact" data-toggle="tab">Relative contact</a></li>
+        <li><a href="#parent" data-toggle="tab">Parent</a></li>
+        <li><a href="#academic_information" data-toggle="tab">Academic Information</a></li>
+        <li class="active"><a href="#score" data-toggle="tab">Score</a></li>
+
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane" id="personal">
+            <p>Name : {$student.STUDENT_NAME}
+            <p>Name In Khmer: <span class="limon">{$student.STUDENT_NAME_IN_KHMER}</span></p>
+            <p>Gender: {$student.SEX}</p>
+            <p>Date of birth: {$student.DATE_OF_BIRTH|date_format:"%d/%m/%Y"}</p>
+            <p>Place of birth: {$student.POB_PROVINCE}</p>
+            <p>Race: {$student.RACE}</p>
+            <p>Nationality: {$student.NATIONALITY}</p>
+            <p>Marital Status: {$student.MARITAL_STATUS}</p>
+            <p>HS. Graduate Year: {$student.HIGH_SCHOOL_GRADUATED_YEAR}</p>
+            <p>From Province: {$student.FROM_PROVINCE}</p>
+            <p>From Heigh School: <span class="limon">{$student.FROM_HIGH_SCHOOL_NAME_IN_KHMER} <span> </p>
+            <p>Job: {$student.STUDENT_JOB}</p>
+            <p>Status: {$student.STATUS}</p>
+        </div>
+
+        <div class="tab-pane" id="personal_contact">
+            <p>Phone Number: {$student.PHONE}</p>
+            <p>Email: {$student.EMAIL}</p>
+            <p>Address: {$student.ADDRESS}</p>
+            <p>Address In Khmer: <span class="limon">{$student.ADDRESS_IN_KHMER}</span></p>
+        </div>
+
+        <div class="tab-pane" id="relative_contact">
+            <p>Name: <span class="limon">{$student.CONTACT_PERSON_NAME}</span></p>
+            <p>Job: <span class="limon">{$student.CONTACT_PERSON_JOB}</span></p>
+            <p>Phone: <span class="limon">{$item.CONTACT_PERSON_PHONE}</span></p>
+            <p>Address :<span class="limon">{$student.CONTACT_ADDRESS}</span></p>
+        </div>
+
+        <div class="tab-pane" id="parent">
+            <p>Mother Name: <span class="limon">{$student.MOTHER_NAME_IN_KHMER}</span></p>
+            <p>Mother Job: <span class="limon">{$student.MOTHER_OCCUPATION_IN_KHMER}</span></p>
+            <p>Father Name: <span class="limon">{$student.FATHER_NAME_IN_KHMER}</span></p>
+            <p>Mother Job: <span class="limon">{$student.FATHER_OCCUPATION_IN_KHMER}</span></p>
+        </div>
+        
+        <div class="tab-pane" id="academic_information">
+            <p>Degree Name: {$student.DEGREE_NAME}</p>
+            <p>Degree Name In Khmer: {$student.DEGREE_NAME_IN_KHMER}</p>
+            <p>School: {$student}</p>
+            <p>Field (Group): {$student}</p>
+            <p>Field (Student): {$student}</p>
+            <p>Promotion: {$student}</p>
+            <p>stage: {$student}</p>
+            <p>Term: {$student}</p>
+            <p>Group: {$student}</p>
+            <p>Study Time: {$student}</p>
+            <p>Room: {$student}</p>
+        </div>
+        
+        <div class="tab-pane active" id="score">
+            {$term=0}
+            {foreach from=$score item=item}
+                {if $term != $item.TERM_NO}
+                    {if $term!=0}</table>{/if}
+            <h4>Term : {$item.TERM_NO}</h4>
+            <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                <tr>
+                    <th>Cource</th>
+                    <th class="midterm">Midterm</th>
+                    <th class="final">Final</th>
+                    <th class="total">Total</th>
+                </tr>
+                {$term = $item.TERM_NO}
+            {/if}
+                <tr>
+                    <td>{$item.COURSE_FULL_NAME}</td>
+                    <td class="midterm">{$item.MID_TERM_SCORE}</td>
+                    <td class="final">{$item.FINAL_SCORE}</td>
+                    <td class="total">{$item.TOTAL_SCORE}</td>
+                </tr>
+            {foreachelse}
+                <div class="alert alert-warning"><i class="fa fa-exclamation-triangle"> </i> Sorry, You dosen't have score result yet. any problem please contect univercity for support</div>
+            {/foreach}
+            </table>
+        </div>
+    </div>
+
+    <script>
+    $(function() {
+        $('#student-info a[href="#score"]').tab('show')
+    })
+    </script>
+
+    <hr>
+
+    <footer>
+        <p class="pull-left">&copy; Sarana 2014</p>
+        <p class="pull-right">Page rendered in <strong>{$ci->benchmark->elapsed_time()}</strong> seconds</p>
+    </footer>
+
+</div>
+<!-- /container -->
+{include file='footer.html'}

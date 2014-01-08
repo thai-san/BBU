@@ -1,0 +1,69 @@
+.limon{
+	font-family: "Limon S1" !important;
+	font-size: 2em !important;
+	line-height: 20px !important;
+}
+
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  
+}
+
+th.midterm, td.midterm ,
+th.final, td.final ,
+th.total, td.total {
+	width: 60px;
+	text-align: center;
+}
+
+.table-striped-bbu>tbody>tr:nth-child(odd)>td, 
+.table-striped-bbu>tbody>tr:nth-child(odd)>th {
+	background-color: #F5F9FF;
+}
+
+.table-bordered-bbu>thead>tr>th,
+.table-bordered-bbu>tbody>tr>th,
+.table-bordered-bbu>tfoot>tr>th,
+.table-bordered-bbu>thead>tr>td,
+.table-bordered-bbu>tbody>tr>td,
+.table-bordered-bbu>tfoot>tr>td {
+	border: 1px solid #ddd;
+}
+
+.table-hover-bbu>tbody>tr:hover>td,
+.table-hover-bbu>tbody>tr:hover>th {
+	background-color: #F0F6FF;
+}
+
+.navbar-bbu {
+	position: relative !important;
+	background-color: #01326D;
+	border-color: #023581;
+	min-height: 40px !important;
+}
+
+.navbar-bbu a.navbar-brand{
+	color: #fff !important;
+	padding: 12px 15px !important;
+}
+
+.tab-pane {
+	padding: 15px;
+	border: 1px solid #ddd;
+	border-top: none;
+	border-radius: 0 0 4px 4px;
+}
+
+.navbar-toggle-bbu {
+	margin-top: 4px !important;
+	margin-right: 15px;
+	margin-bottom: 0 !important;
+}
+
+.fa-bbu {
+	font-size: 1.7em;
+	color: #eee;
+}
