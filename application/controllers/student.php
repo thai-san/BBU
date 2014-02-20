@@ -12,6 +12,8 @@ class Student extends CI_Controller {
 	{
 		$data['student'] = $this->Student_Model->detail($stu_id);
 		$data['score'] = $this->Student_Model->score($stu_id);
+		$data['group'] = $this->Student_Model->group($stu_id);
+		$data['payment'] = $this->Student_Model->payment($stu_id);
 		$this->smarty->view("student_detail",$data);
 	}
 

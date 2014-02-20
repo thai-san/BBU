@@ -96,6 +96,50 @@ SQL;
 
 	}
 
+	public function group($student_id)
+	{
+		$sql = <<<SQL
+SELECT
+	*
+FROM
+	V_THAISAN_STUDENT_GROUP_HISTORY g
+WHERE
+	g.STUDENT_ID = ?
+SQL;
+		$sqlsrv = $this->load->database('BBU', TRUE);
+
+		$res = $sqlsrv->query(
+			$sql,
+			array(
+				$student_id
+			)
+		);
+
+		return $res->result_array();
+	}
+
+	public function payment($student_id)
+	{
+		$sql = <<<SQL
+SELECT
+	*
+FROM
+	V_THAISAN_STUDENT_PAYMENT p
+WHERE
+	p.STUDENT_ID = ?
+SQL;
+		$sqlsrv = $this->load->database('BBU', TRUE);
+
+		$res = $sqlsrv->query(
+			$sql,
+			array(
+				$student_id
+			)
+		);
+
+		return $res->result_array();
+	}
+
 }
 
 /* End of file student_model.php */
