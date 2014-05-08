@@ -2,9 +2,8 @@
 
 class Admin extends CI_Controller {
 
-	public function index()
-	{
-		
+	public function index() {
+		$this->smarty->view('admin');
 	}
 
 }
