@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2014-05-08 20:11:34
+Date: 2014-05-10 20:27:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,14 +51,14 @@ INSERT INTO `permission` VALUES ('15', 'view info', '4');
 -- ----------------------------
 DROP TABLE IF EXISTS `priviledge`;
 CREATE TABLE `priviledge` (
-  `group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `priviledge_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL,
-  PRIMARY KEY (`group_id`),
+  PRIMARY KEY (`priviledge_id`),
   KEY `user_id` (`user_id`),
   KEY `permission_id` (`permission_id`),
-  CONSTRAINT `priviledge_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`),
-  CONSTRAINT `priviledge_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+  CONSTRAINT `priviledge_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `priviledge_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -75,18 +75,21 @@ INSERT INTO `priviledge` VALUES ('5', '1', '10');
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `timestamp` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `password` varchar(200) NOT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `disable` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`user_id`,`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', 'admin', null, '2014-05-08 19:04:34');
+INSERT INTO `user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'bbu@gmail.com', '2014-05-10 20:15:04', '0');
+INSERT INTO `user` VALUES ('5', 'leak', '202cb962ac59075b964b07152d234b70', 'leak@gmail.com', '2014-05-10 20:15:14', '0');
+INSERT INTO `user` VALUES ('6', 'san', '202cb962ac59075b964b07152d234b70', 'san@gmail.com', '2014-05-10 20:18:56', '1');
 
 -- ----------------------------
 -- Table structure for user_group
