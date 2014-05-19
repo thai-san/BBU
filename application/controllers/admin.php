@@ -36,6 +36,9 @@ class Admin extends CI_Controller {
 	public function resetPassword($user_id) {
 
 	}
+	public function group(){
+		$this->smarty->view('group');
+	}
 }
 
 /* End of file admin.php */
