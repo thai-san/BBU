@@ -1,62 +1,72 @@
-{include file='header.html' title='user'}
- <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
+{include file='header.html' title='User'}
+<div class="container-fluid">
+    <div class="col-sm-3 col-md-2 sidebar">
+        {include file='sidebar.html'}           
     </div>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
-      </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {if validation_errors()}
+            <div class="bs-callout bs-callout-danger">
+                <h4>Input Error</h4>
+                {validation_errors()}
+            </div>
+        {/if}
+		<h2>Add User</h2>
+        <form class="form-horizontal" action="/dashboard/user" method="post" role="form" autocomplete="off">
+			<div class="form-group">
+                <label for="user_name" class="col-sm-2 control-label">User Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="user_name" name="user_name" value="{set_value("user_name")}" placeholder="User Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password" name="password" value="{set_value("password")}" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Confirm Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="{set_value("confirm_password")}" placeholder="Confirm Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" name="email" value="{set_value("email")}" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Add User</button>
+                </div>
+            </div>
+        </form>
+
+		<h2>User List</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Last Activity</th>
+                <th>Disable</th>
+                <th>Reset password</th>
+            </tr>
+            {foreach from=$users item=item}
+            <tr>
+                <td>{$item.user_name}</td>
+                <td>{$item.email}</td>
+                <td>{$item.last_activity}</td>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>
+                    <button>Reset Password</button>
+                </td>
+            </tr>
+            {/foreach}
+        </table>
     </div>
-
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
-
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
-    </div> <!-- /container -->
+</div>
 {include file='footer.html'}

@@ -6,7 +6,7 @@ class Admin_Model extends CI_Model {
 SELECT
 	*
 FROM
-	user
+	users
 SQL;
 		$res = $this->db->query(
 			$sql,

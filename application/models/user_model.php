@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_Model extends CI_Model {
+class User_Model extends MY_Model {
 
 	public function login($user_name, $password) {
 		$sql = <<<SQL
@@ -8,7 +8,7 @@ SELECT
 	*,
 	COUNT(*) AS result
 FROM
-	user
+	users
 WHERE
 	user_name = ? && password = ?
 SQL;
@@ -25,7 +25,7 @@ SQL;
 
 	public function userAdd($user_name, $password, $email) {
 		$sql = <<<SQL
-INSERT INTO USER (
+INSERT INTO users (
 	user_name,
 	password,
 	email

@@ -67,3 +67,17 @@ th.total, td.total {
 	font-size: 1.7em;
 	color: #eee;
 }
+
+.jumbotron {
+	padding: 0 !important;
+}
+
+.jumbotron img {
+	width: 100%;
+	height: auto;
+	border-radius: 6px;
+}
+
+.user-name {
+	color: #fff;
+}

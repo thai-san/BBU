@@ -1,37 +1,7 @@
 {include file='header.html' title='Home'}
 <div class="container-fluid">
-    <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-        	<!-- Admin -->
-            <ul class="nav nav-sidebar">
-                <li><a href="/admin/user">User</a></li>
-                <li><a href="#">Permission</a></li>
-                <li><a href="#">Group</a></li>
-            </ul>
-			<!-- Staff -->
-			<ul class="nav nav-sidebar">
-                <li><a href="#">New Post</a></li>
-                <li><a href="#">Manage Post</a></li>
-                <li><a href="#">Delete Post</a></li>
-                <li><a href="#">Edit Post</a></li>
-            </ul>
-			
-			<!-- Teacher -->
-			<ul class="nav nav-sidebar">
-                <li><a href="#">Upload E-Book</a></li>
-                <li><a href="#">Manage E-Book</a></li>
-                <li><a href="#">Delete E-Book</a></li>
-                <li><a href="#">Edit E-Book</a></li>
-            </ul>
-
-			<!-- Student -->
-            <ul class="nav nav-sidebar">
-                <li><a href="#">Personal Infomation</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Academic Infomation</a></li>
-                <li><a href="#">Score</a></li>
-            </ul>
-
+            {include file='sidebar.html'}        	
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Dashboard</h1>
@@ -188,6 +158,5 @@
                 </table>
             </div>
         </div>
-    </div>
 </div>
 {include file='footer.html'}
