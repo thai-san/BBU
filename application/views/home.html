@@ -198,12 +198,11 @@
 
         $(document).ready(function() { 
 
-            $('#login').modal("show")
-                .on('shown.bs.modal', function (e) {
-                    var input = $(this).find('input[type=text]');
-                    if(input.length > 0){
-                        input[0].focus();
-                    }
+            $('#login').modal("hide").on('shown.bs.modal', function (e) {
+                var input = $(this).find('input[type=text]');
+                if(input.length > 0){
+                    input[0].focus();
+                }
             });
 
             $('#login form').ajaxForm({
