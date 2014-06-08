@@ -11,16 +11,17 @@
           toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
       });
 </script>
-<div class="container-fluid">
 
-    <div class="col-sm-3 col-md-2 sidebar">
-    {include file='sidebar.html'}    
+<div class="page-container">
+    
+    <div class="sidebar-container">
+        <div class="sidebar" id="sidebar">
+            {include file='sidebar.html'}
+        </div>
     </div>
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        
+    <div class="page-content" id="page-content">
         <h2>Post</h2>
-
         <form action='/dashboard/newpost' method='post' rol="form">
             <div class="form-group">
                 <label>Title</label>
@@ -34,7 +35,6 @@
                 <input type='submit' name='submit' value='Save'>
             </div>
         </form>
-
     </div>
 </div>
 

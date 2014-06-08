@@ -1,9 +1,53 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Student_model extends CI_Model {
+class Student_model extends MY_Model {
 
-	function detail($student_id)
-	{
+	public function getStudent($student_id) {
+		$sql = <<<SQL
+SELECT
+	STUDENT_ID,
+	STUDENT_NAME,
+	EMAIL,
+	STATUS
+FROM
+	STUDENT
+WHERE
+	STUDENT_ID = ?
+SQL;
+		$sqlsrv = $this->load->database('BBU', TRUE);
+
+		$res = $sqlsrv->query(
+			$sql,
+			array(
+				$student_id
+			)
+		);
+
+		return ($res ? $res->row_array() : false);
+	}
+
+	public function login($student_id, $password) {
+		$sql = <<<SQL
+SELECT
+	*,
+	COUNT(*) AS result
+FROM
+	students
+WHERE
+	student_id = ? && password = ?
+SQL;
+		$res = $this->db->query(
+			$sql,
+			array(
+				$student_id,
+				$password
+			)
+		);
+		
+		return $res->row_array();
+	}
+
+	function infomation($student_id) {
 		$sql = <<<SQL
 SELECT
 
@@ -139,7 +183,6 @@ SQL;
 
 		return $res->result_array();
 	}
-
 }
 
 /* End of file student_model.php */

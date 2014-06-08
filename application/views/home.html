@@ -1,85 +1,219 @@
-{include file='header.html' title='Home'}
-<div class="container">
+{include file='_header.html'}
 
-    <div class="row row-offcanvas row-offcanvas-right">
-
-        <div class="col-xs-12 col-sm-9">
-            <p class="pull-right visible-xs">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
-            <div class="jumbotron">
-                <img src="/assets/img/banner_web_master.jpg" alt="new promotion">
+    <div id="header">
+        <div class="container">
+            <div id="logo">
+                <img src="/assets/img/logo.jpg" alt="BBU Logo">
             </div>
-            <div class="row">
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                    </p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                    </p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                    </p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                    </p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                    </p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a>
-                    </p>
-                </div>
-                <!--/span-->
-            </div>
-            <!--/row-->
-        </div>
-        <!--/span-->
-
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-            <div class="list-group">
-                <a href="#" class="list-group-item active">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
+            <div id="user-menu">
+                <ul>
+                    <li><a href="/login"​​ data-toggle="modal" data-target="#login">Login</a></li>
+                </ul>
             </div>
         </div>
-        <!--/span-->
     </div>
-    <!--/row-->
 
-    <hr>
+    <div id="banner">
+        <div class="container">
+            <div id="ads" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#ads" data-slide-to="0" class="active"></li>
+                    <li data-target="#ads" data-slide-to="1"></li>
+                    <li data-target="#ads" data-slide-to="2"></li>
+                </ol>
 
-    <footer>
-        <p>&copy; Company 2014</p>
-    </footer>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="/assets/img/banner_web_master.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img src="/assets/img/banner_web_master.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img src="/assets/img/banner_web_master.jpg" alt="">
+                    </div>
+                </div>
 
-    {include file='footer.html'}
+                <!-- Controls -->
+                <a class="left carousel-control" href="#ads" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#ads" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Panel heading without title</div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Panel heading without title</div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Panel heading without title</div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Panel heading without title</div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Panel heading without title</div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="login" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Build Bright University User Login</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 staff-login">
+                            <h4>Staff Login</h4><br>
+                            <form role="form" action="/user/login" method="post" autocomplete="off" disabled>
+                                <div class="form-group">
+                                    <label for="staff_user_name">User Name</label>
+                                    <input type="text" class="form-control" id="staff_user_name" name="staff_user_name" value="{$smarty.cookies.staff_user_name}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="staff_password">Password</label>
+                                    <input type="password" class="form-control" id="staff_password" name="staff_password" required>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="staff_remember" id="staff_remember" {if $smarty.cookies.staff_user_name}checked{/if}>Remember me
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-success">Login</button>
+                            </form>
+                        </div>
+                        <div class="col-md-6 student-login">
+                            <h4>Student Login</h4><br>
+                            <form role="form" action="/student/login" method="post" autocomplete="off">
+                                <div class="form-group">
+                                    <label for="student_id">Student ID</label>
+                                    <input type="text" class="form-control" id="student_id" name="student_id" value="{$smarty.cookies.student_id}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="student_password">Password</label>
+                                    <input type="password" class="form-control" id="student_password" name="student_password" required>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="student_remember" id="student_remember" {if $smarty.cookies.student_id}checked{/if}>Remember me
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="login-status"></div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    
+    <script>
+        
+        var fail        = '<div class="alert alert-danger"><i class="fa fa-warning"></i> Invalid User Name or Password</div>';
+        var ok          = '<div class="alert alert-success"><i class="fa fa-check"></i> Login success, Redirecting...</div>';
+        var processing  = '<div class="alert alert-info"><i class="fa fa-refresh fa-spin"></i> Requesting...</div>';
+        var err         = '<div class="alert alert-danger"><i class="fa fa-warning"></i> Error occur something wrong.</div>';
+
+        function disableControl (context) {
+            context.find("input").attr('disabled', 'disabled');
+            context.find("button").attr('disabled', 'disabled'); 
+        }
+
+        function enableControl (context) {
+            context.find("input").removeAttr('disabled');
+            context.find("button").removeAttr('disabled');
+        }
+
+        function request(formData, $form, options) { 
+            disableControl($form);
+            $(this.target).html(processing);
+            return true;
+        } 
+         
+        function response(responseText, statusText, xhr, $form)  { 
+            if (responseText.status == "OK") {
+                $(this.target).html(ok);
+                window.location = responseText.url;
+            } else {
+                $(this.target).html(fail);
+            }
+            enableControl($form);
+            console.log(responseText);            
+        }
+
+        function error (responseText, statusText, xhr, $form) {
+            enableControl($form);
+            $(this.target).html(err);
+            console.log(responseText);
+        }
+
+        $(document).ready(function() { 
+
+            $('#login').modal("show")
+                .on('shown.bs.modal', function (e) {
+                    var input = $(this).find('input[type=text]');
+                    if(input.length > 0){
+                        input[0].focus();
+                    }
+            });
+
+            $('#login form').ajaxForm({
+                target: '#login-status',
+                beforeSubmit: request,
+                error: error,
+                success: response,
+                dataType: 'json',
+                data: { ajax: 1 }
+            });
+        }); 
+    </script>
+{include file='_footer.html'}

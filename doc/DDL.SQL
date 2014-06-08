@@ -5,36 +5,41 @@ CREATE TABLE users (
 	email			VARCHAR(100),
 	last_activity 	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	is_enable		TINYINT(1) DEFAULT 1,
+	group_id		INT,
 	PRIMARY KEY (user_id),
-	UNIQUE(user_name)
-) ENGINE = INNODB CHARACTER SET 'utf8';
+	UNIQUE(user_name),
+	FOREIGN KEY (group_id) REFERENCES groups (group_id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB CHARACTER SET 'utf8';
 
-CREATE TABLE priviledges (
-	priviledge_id 	INT NOT NULL AUTO_INCREMENT,
-	priviledeg_name VARCHAR(40) NOT NULL,
-	group_name		VARCHAR(40)	NOT NULL,
-	PRIMARY KEY (priviledge_id)
-) ENGINE = INNODB CHARACTER SET 'utf8';
+CREATE TABLE students (
+	student_id		VARCHAR(40) NOT NULL,
+	student_name	VARCHAR(40) NOT NULL,
+	email			VARCHAR(100),
+	password		VARCHAR(40) NOT NULL,
+	last_activity 	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	is_enable		TINYINT(1) NOT NULL DEFAULT 1,
+	PRIMARY KEY (student_id)
+) ENGINE=InnoDB CHARACTER SET 'utf8';
 
-CREATE TABLE permissions (
-	permission_id 	INT NOT NULL AUTO_INCREMENT,
-	user_id 		INT NOT NULL,
-	priviledge_id 	INT NOT NULL,
-	PRIMARY KEY (permission_id),
-	UNIQUE 	KEY (user_id,priviledge_id),
-	FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	FOREIGN KEY (priviledge_id) REFERENCES priviledge (priviledge_id) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = INNODB CHARACTER SET = 'utf8';
+CREATE TABLE groups (
+	group_id	INT NOT NULL AUTO_INCREMENT,
+	group_name	VARCHAR(40) NOT NULL,
+	PRIMARY KEY (group_id)
+) ENGINE=InnoDB CHARACTER SET 'utf8';
 
 CREATE TABLE posts (
 	post_id			INT NOT NULL AUTO_INCREMENT,
+	post_type		ENUM('PDF','IMAGE','TEXT'),
 	post_title		VARCHAR(255) NOT NULL,
 	post_content	TEXT NOT NULL,
 	post_date		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	post_owner		INT NOT NULL,
+	category		VARCHAR(40) NOT NULL,
+	expire_date		DATE NOT NULL,
+	is_enable		TINYINT(1) NOT NULL DEFAULT 1,
 	PRIMARY KEY (post_id),
-	FOREIGN KEY (post_owner) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = INNODB CHARACTER SET 'utf8';
+	FOREIGN KEY (post_owner) REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB CHARACTER SET 'utf8';
 
 CREATE TABLE books (
 	book_id				INT NOT NULL AUTO_INCREMENT,
@@ -43,5 +48,5 @@ CREATE TABLE books (
 	book_upload_date	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	total_download		INT NOT NULL DEFAULT 0,
 	PRIMARY KEY (book_id),
-	FOREIGN KEY (book_uploader) REFERENCES user (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = INNODB CHARACTER SET 'utf8';
+	FOREIGN KEY (book_uploader) REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB CHARACTER SET 'utf8';

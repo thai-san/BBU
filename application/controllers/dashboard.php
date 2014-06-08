@@ -1,7 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
-public function __construct() {
+	
+	public function __construct() {
 		parent::__construct();
 		if (!$this->session->userdata("user_id")) {
 			header("location:/");
@@ -81,6 +82,15 @@ public function __construct() {
 		$this->load->model('Post_Model');
 		$data['post'] = $this->Post_Model->detail($post_id);
 		$this->smarty->view('edit_post.html', $data);
+	}
+
+	public function studentinfo($stu_id = null) {
+		$this->load->model("Student_Model");
+		$data['student'] = $this->Student_Model->infomation($stu_id);
+		$data['score'] = $this->Student_Model->score($stu_id);
+		$data['group'] = $this->Student_Model->group($stu_id);
+		$data['payment'] = $this->Student_Model->payment($stu_id);
+		$this->smarty->view("student_detail", $data);
 	}
 }
 

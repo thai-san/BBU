@@ -81,3 +81,98 @@ th.total, td.total {
 .user-name {
 	color: #fff;
 }
+
+html, body {
+	height: 100%;
+	overflow: auto;
+}
+
+#page {
+	position: relative;
+	min-height: 100%;
+}
+
+#page-inner {
+	padding-bottom: 50px;
+}
+
+/* Header */
+#header {
+	background: #01326d;
+	margin-bottom: 25px;
+}
+
+#banner {
+	margin: 0 auto 25px;
+}
+
+#banner img {
+	width: 100%;
+	height: auto;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #01326d;
+	color: #fff;
+	padding: 15px 0;
+}
+
+#logo {
+	float: left;
+}
+
+#user-menu {
+	margin-top: 25px;
+	float: right;
+}
+
+#user-menu ul {
+	margin: 0;
+	padding: 0;
+}
+
+#user-menu li{
+	float: left;
+	list-style: none;
+	margin-left: 10px;
+}
+
+#user-menu a {
+	color: #fff;
+}
+
+.modal-open {
+	overflow: auto !important; 
+}
+
+.staff-login {
+	position: relative;
+}
+
+.staff-login:before {
+	content: " ";
+	position: absolute;
+	bottom: 0;
+	top:0;
+	right: 0;
+	width: 1px;
+	border-right: 1px solid #ECECEC;
+}
+
+#login .modal-footer {
+	text-align: left;
+}
+
+#login .alert {
+	margin-bottom: 0;
+}
+
+.modal.no-js {
+    display: block !important;
+    position: relative !important;
+    overflow: inherit !important;
+}
