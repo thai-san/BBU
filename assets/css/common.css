@@ -8,15 +8,20 @@
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-body {
-  
-}
-
 th.midterm, td.midterm ,
 th.final, td.final ,
 th.total, td.total {
 	width: 60px;
 	text-align: center;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style: none;
 }
 
 .table-striped-bbu>tbody>tr:nth-child(odd)>td, 

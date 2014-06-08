@@ -1,16 +1,114 @@
-{include file='_header.html'}
-    <div id="header">
-        <div class="container">
-            <div id="logo">
-                <img src="/assets/img/logo.jpg" alt="BBU Logo">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link hrel="shortcut icon" href="/assets/img/bbu.gif" rel="icon" type="image/x-icon">
+    <title>{if $title eq ''}Build Bright University{else}{$title}{/if}</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="/assets/css/bootstrap-theme.min.css" media="screen">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/fonts/fonts.css"  media="screen">
+    <link rel="stylesheet" href="/assets/css/alertify.core.css"  media="screen">
+    <link rel="stylesheet" href="/assets/css/alertify.default.css"  media="screen">
+    <link rel="stylesheet" href="/assets/css/dashboard.css"  media="screen">
+    <link rel="stylesheet" href="/assets/css/common.css"  media="screen">
+    
+    <!--[if lt IE 9]>
+      <script src="/assets/bootstrap/js/html5shiv.js"></script>
+      <script src="/assets/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/assets/js/jquery.form.min.js"></script>
+    {if $ci->session->flashdata("message")}
+    <script src="/assets/js/alertify.min.js"></script>
+    <script>
+        function notify () {
+            alertify.log("{$ci->session->flashdata('message')}");
+        }
+        window.onload = notify;
+    </script>
+    {/if}
+
+</head>
+<body>
+    <div id="page">
+        <div id="page-inner">
+            <div id="header">
+                <div class="container">
+                    <div id="logo">
+                        <img src="/assets/img/logo.jpg" alt="BBU Logo">
+                    </div>
+                </div>
+            </div>
+
+            <div id="login" class="modal fade in no-js" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Build Bright University User Login</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 staff-login">
+                                    <h4>Staff Login</h4><br>
+                                    <form role="form" action="/user/login" method="post" autocomplete="off" disabled>
+                                        <div class="form-group">
+                                            <label for="staff_user_name">User Name</label>
+                                            <input type="text" class="form-control" id="staff_user_name" name="staff_user_name" value="{$smarty.cookies.staff_user_name}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="staff_password">Password</label>
+                                            <input type="password" class="form-control" id="staff_password" name="staff_password" required>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="staff_remember" id="staff_remember" {if $smarty.cookies.staff_user_name}checked{/if}>Remember me
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Login</button>
+                                    </form>
+                                </div>
+                                <div class="col-md-6 student-login">
+                                    <h4>Student Login</h4><br>
+                                    <form role="form" action="/student/login" method="post" autocomplete="off">
+                                        <div class="form-group">
+                                            <label for="student_id">Student ID</label>
+                                            <input type="text" class="form-control" id="student_id" name="student_id" value="{$smarty.cookies.student_id}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="student_password">Password</label>
+                                            <input type="password" class="form-control" id="student_password" name="student_password" required>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="student_remember" id="student_remember" {if $smarty.cookies.student_id}checked{/if}>Remember me
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div id="login-status"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <div class="container">
+                    &copy; 2013 Build Bright University
+                </div>
             </div>
         </div>
     </div>
-    <div id="login" class="modal fade in no-js" aria-hidden="false">
+    <div id="login" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Build Bright University User Login</h4>
                 </div>
                 <div class="modal-body">
@@ -60,5 +158,10 @@
                 </div>
             </div>
         </div>
-    </div>
-{include file='_footer.html'}
+    </div>    
+
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/holder.js"></script>
+    <script src="/assets/js/common.js"></script>
+</body>
+</html>

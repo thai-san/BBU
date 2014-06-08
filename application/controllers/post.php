@@ -6,6 +6,10 @@ class Post extends CI_Controller {
 		$this->smarty->view("post_detail");
 	}
 
+	public function lists() {
+		$this->smarty->view("post_list");
+	}
+
 }
 
 /* End of file post.php */
