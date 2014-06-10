@@ -1,3 +1,9 @@
+CREATE TABLE groups (
+	group_id	INT NOT NULL AUTO_INCREMENT,
+	group_name	VARCHAR(40) NOT NULL,
+	PRIMARY KEY (group_id)
+) ENGINE=InnoDB CHARACTER SET 'utf8';
+
 CREATE TABLE users (
 	user_id			INT NOT NULL AUTO_INCREMENT,
 	user_name		VARCHAR(40) NOT NULL,
@@ -21,12 +27,6 @@ CREATE TABLE students (
 	PRIMARY KEY (student_id)
 ) ENGINE=InnoDB CHARACTER SET 'utf8';
 
-CREATE TABLE groups (
-	group_id	INT NOT NULL AUTO_INCREMENT,
-	group_name	VARCHAR(40) NOT NULL,
-	PRIMARY KEY (group_id)
-) ENGINE=InnoDB CHARACTER SET 'utf8';
-
 CREATE TABLE posts (
 	post_id			INT NOT NULL AUTO_INCREMENT,
 	post_type		ENUM('PDF','IMAGE','TEXT'),
@@ -34,7 +34,7 @@ CREATE TABLE posts (
 	post_content	TEXT NOT NULL,
 	post_date		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	post_owner		INT NOT NULL,
-	category		VARCHAR(40) NOT NULL,
+	category_id		INT NOT NULL,
 	expire_date		DATE NOT NULL,
 	is_enable		TINYINT(1) NOT NULL DEFAULT 1,
 	PRIMARY KEY (post_id),
