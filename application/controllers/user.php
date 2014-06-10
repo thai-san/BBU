@@ -12,6 +12,8 @@ class User extends CI_Controller {
 		} else {
 			delete_cookie('staff_user_name'); 
 		}
+		
+		delete_cookie('student_id'); 
 
 		$this->load->model('User_Model');
 		$result = $this->User_Model->login($user_name, $password);

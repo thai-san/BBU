@@ -104,7 +104,26 @@ html, body {
 /* Header */
 #header {
 	background: #01326d;
+	margin-bottom: 10px;
+	-webkit-box-shadow: 0px 5px 3px #888888;
+	-moz-box-shadow: 0px 5px 3px #888888;
+	box-shadow: 0px 5px 3px #888888;
+}
+
+#navigation {
 	margin-bottom: 25px;
+	background: #01326d;
+	color: #fff;
+}
+
+#navigation a {
+	color: #fff;
+}
+
+#navigation .nav>li>a:hover,
+#navigation .nav>li>a:focus {
+	text-decoration: underline !important;
+	background-color: inherit !important;
 }
 
 #banner {
@@ -135,30 +154,67 @@ html, body {
 	float: right;
 }
 
-#user-menu ul {
+#user-menu>ul {
 	margin: 0;
 	padding: 0;
 }
 
-#user-menu li{
+#user-menu>ul>li{
 	float: left;
 	list-style: none;
 	margin-left: 10px;
 }
 
-#user-menu a {
+#user-menu>ul>li>a{
 	color: #fff;
+}
+
+#user-menu .dropdown-menu {
+	top: 120% !important;
+	right: 0 !important;
+	left: inherit !important;
+}
+
+#user-menu .dropdown-menu:before {
+	position: absolute;
+	top: -7px;
+	right: 9px;
+	display: inline-block;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #ccc;
+	border-left: 7px solid transparent;
+	border-bottom-color: rgba(0, 0, 0, 0.2);
+	content: '';
+}
+
+#user-menu .dropdown-menu:after {
+	position: absolute;
+	top: -6px;
+	right: 10px;
+	display: inline-block;
+	border-right: 6px solid transparent;
+	border-bottom: 6px solid #ffffff;
+	border-left: 6px solid transparent;
+	content: '';
+}
+
+.user_name:link,
+.user_name:visited,
+.user_name:active,
+.user_name {
+	color: #fff;
+	text-transform: capitalize;
 }
 
 .modal-open {
 	overflow: auto !important; 
 }
 
-.staff-login {
+.student-login {
 	position: relative;
 }
 
-.staff-login:before {
+.student-login:before {
 	content: " ";
 	position: absolute;
 	bottom: 0;

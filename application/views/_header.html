@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="/assets/css/alertify.default.css"  media="screen">
     <link rel="stylesheet" href="/assets/css/dashboard.css"  media="screen">
     <link rel="stylesheet" href="/assets/css/common.css"  media="screen">
-    
     <!--[if lt IE 9]>
       <script src="/assets/bootstrap/js/html5shiv.js"></script>
       <script src="/assets/bootstrap/js/respond.min.js"></script>
@@ -42,8 +41,35 @@
                     </div>
                     <div id="user-menu">
                         <ul>
+                        {if $ci->session->userdata("user_name")}
+                            <li>
+                                <div class="dropdown">
+                                    <a data-toggle="dropdown" href="#" class="user_name">{$ci->session->userdata("user_name")}</a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="/user/logout">Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        {else}
                             <li><a href="/login"​​ data-toggle="modal" data-target="#login">Login</a></li>
+                        {/if}
                         </ul>
                     </div>
                 </div>
             </div>
+        <div id="navigation">
+            <div class="container">
+                <ul class="nav nav-pills">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="#">MIS</a></li>
+                    <li><a href="#">Adcademic</a></li>
+                    {if $ci->session->userdata("is_student")}
+                    <li><a href="#">Score</a></li>
+                    {/if}
+                </ul>
+            </div>
+        </div>

@@ -26,6 +26,8 @@ class Student extends CI_Controller {
 		} else {
 			delete_cookie('student_id'); 
 		}
+		
+		delete_cookie('staff_user_name'); 
 
 		authenticate:
 
@@ -37,7 +39,8 @@ class Student extends CI_Controller {
 			if ($result && $result['result'] == 1) {
 				$this->session->set_userdata("user_id", $result['student_id']);
 				$this->session->set_userdata("user_name", $result['student_name']);
-				$status = array('status' => "OK", 'url' => "/dashboard");
+				$this->session->set_userdata("is_student", true);
+				$status = array('status' => "OK", 'url' => "/");
 			}else{
 				$status = array('status' => "FAIL", 'url' => "/login");
 			}
