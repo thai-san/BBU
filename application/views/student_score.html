@@ -1,0 +1,30 @@
+{include file='_header.html' title='Student'}
+    <div id="content">
+        <div class="container">
+            {$term=0}
+            {foreach from=$score item=item}
+                {if $term != $item.TERM_NO}
+                    {if $term!=0}</table>{/if}
+            <h4>Term : {$item.TERM_NO}</h4>
+            <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                <tr>
+                    <th>Course</th>
+                    <th class="midterm">Midterm</th>
+                    <th class="final">Final</th>
+                    <th class="total">Total</th>
+                </tr>
+                {$term = $item.TERM_NO}
+            {/if}
+                <tr {if $item.TOTAL_SCORE < 60 }class="danger"{/if}>
+                    <td>{$item.COURSE_FULL_NAME}</td>
+                    <td class="midterm">{$item.MID_TERM_SCORE}</td>
+                    <td class="final">{$item.FINAL_SCORE}</td>
+                    <td class="total">{$item.TOTAL_SCORE}</td>
+                </tr>
+            {foreachelse}
+                <div class="alert alert-warning"><i class="fa fa-exclamation-triangle"> </i> Sorry, You dosen't have score result yet. any problem please contect univercity for support</div>
+            {/foreach}
+            </table>
+        </div>
+    </div>
+{include file='_footer.html'}

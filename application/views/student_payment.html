@@ -1,0 +1,23 @@
+{include file='_header.html'}
+<div class="container">
+    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+        <tr>
+            <th>Invoice No</th>
+            <th>Invoice Date</th>
+            <th>Term</th>
+            <th>Paid</th>
+            <th>Deposit</th>
+            <th>Note</th>
+        </tr>
+    {foreach from=$payment item=item}
+        <tr>
+            <td>{$item.INVOICE_NO}</td>
+            <td>{$item.INVOICE_DATE|date_format:"%Y-%m-%d"}</td>
+            <td>{$item.TERM_NO}</td>
+            <td>{$item.PAID|number_format:2}$</td>
+            <td>{$item.DEPOSIT|number_format:2}</td>
+            <td>{$item.NOTE}</td>
+        </tr>
+    {/foreach}
+</div>
+{include file='_footer.html'}

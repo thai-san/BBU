@@ -46,9 +46,7 @@
                                 <div class="dropdown">
                                     <a data-toggle="dropdown" href="#" class="user_name">{$ci->session->userdata("user_name")}</a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
+                                        <li><a href="/student/changepasword">Change Password</a></li>
                                         <li class="divider"></li>
                                         <li><a href="/user/logout">Logout</a></li>
                                     </ul>
@@ -68,7 +66,9 @@
                     <li><a href="#">MIS</a></li>
                     <li><a href="#">Adcademic</a></li>
                     {if $ci->session->userdata("is_student")}
-                    <li><a href="#">Score</a></li>
+                    <li><a href="/student/score">Score</a></li>
+                    <li><a href="/student/payment">Payment</a></li>
+                    <li><a href="/student/info">Infomation</a></li>
                     {/if}
                 </ul>
             </div>

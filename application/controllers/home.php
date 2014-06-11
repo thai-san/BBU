@@ -34,7 +34,7 @@ class Home extends CI_Controller {
 				$this->session->set_userdata("user_id", $result['student_id']);
 				$this->session->set_userdata("user_name", $result['student_name']);
 				$this->session->set_userdata("is_student", true);
-				$status = array('status' => "OK", 'url' => "/");
+				$status = array('status' => "OK", 'url' => "/student/score");
 			}else{
 				$status = array('status' => "FAIL", 'url' => "/login");
 			}

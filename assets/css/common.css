@@ -237,3 +237,7 @@ html, body {
     position: relative !important;
     overflow: inherit !important;
 }
+
+.panel > .panel-heading {
+	font-size: 1.3em;
+}

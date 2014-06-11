@@ -84,14 +84,6 @@ class Dashboard extends CI_Controller {
 		$this->smarty->view('edit_post.html', $data);
 	}
 
-	public function studentinfo($stu_id = null) {
-		$this->load->model("Student_Model");
-		$data['student'] = $this->Student_Model->infomation($stu_id);
-		$data['score'] = $this->Student_Model->score($stu_id);
-		$data['group'] = $this->Student_Model->group($stu_id);
-		$data['payment'] = $this->Student_Model->payment($stu_id);
-		$this->smarty->view("student_detail", $data);
-	}
 }
 
 /* End of file dashboard.php */
