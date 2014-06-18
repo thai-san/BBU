@@ -5,31 +5,30 @@ class Student extends CI_Controller {
 	public function __construct() {
 
         parent::__construct();
+		
+		$this->data = array();
 
-		if (!$this->session->userdata("is_student")) {
-			redirect("/"); exit();
-		}else {
+		if ($this->session->userdata("STUDENT_ID")) {
 			$this->load->model("Student_Model");
-			$this->student_id = $this->session->userdata("user_id");
+			$this->student_id = $this->session->userdata("STUDENT_ID");
+		}else {
+			redirect("/"); exit();
 		}
-
     }
 
 	public function score($stu_id = null) {
-		$data['score'] = $this->Student_Model->score($this->student_id);
-		$this->smarty->view("student_score",$data);
+		$this->data['score'] = $this->Student_Model->score($this->student_id);
+		$this->smarty->view("student_score",$this->data);
 	}
 
 	public function info() {
-		$data['student'] = $this->Student_Model->infomation($this->student_id);
-		$data['group'] = $this->Student_Model->group($this->student_id);
-		$this->smarty->view("student_info",$data);
+		$this->data['student'] = $this->Student_Model->infomation($this->student_id);
+		$this->data['payment'] = $this->Student_Model->payment($this->student_id);
+		$this->data['group'] = $this->Student_Model->group($this->student_id);
+
+		$this->smarty->view("student_info",$this->data);
 	}
 
-	public function payment() {
-		$data['payment'] = $this->Student_Model->payment($this->student_id);
-		$this->smarty->view("student_payment",$data);
-	}
 }
 
 /* End of file student.php */

@@ -4,40 +4,116 @@
 
         <div class="col-md-6">
             <div class="panel panel-primary">
-                <div class="panel-heading">Academic Information</div>
+                <div class="panel-heading">Personal Information</div>
                 <div class="panel-body">
-                    <p>Degree Name: {$student.DEGREE_NAME}</p>
-                    <p>Degree Name In Khmer: {$student.DEGREE_NAME_IN_KHMER}</p>
-                    <p>School: {$student}</p>
-                    <p>Field (Group): {$student}</p>
-                    <p>Field (Student): {$student}</p>
-                    <p>Promotion: {$student}</p>
-                    <p>stage: {$student}</p>
-                    <p>Term: {$student}</p>
-                    <p>Group: {$student}</p>
-                    <p>Study Time: {$student}</p>
-                    <p>Room: {$student}</p>
+                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                        <tr>
+                            <th>Name</th>
+                            <td>{$student.STUDENT_NAME}</td>
+                        </tr>
+                        <tr>
+                            <th>Name In Khmer</th>
+                            <td class="limon">{$student.STUDENT_NAME_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{$student.SEX}</td>
+                        </tr>
+                        <tr>
+                            <th>Date of birth</th>
+                            <td>{$student.DATE_OF_BIRTH|date_format:"%d/%m/%Y"}</td>
+                        </tr>
+                        <tr>
+                            <th>Place of birth</th>
+                            <td>{$student.POB_PROVINCE}</td>
+                        </tr>
+                        <tr>
+                            <th>Race</th>
+                            <td>{$student.RACE}</td>
+                        </tr>
+                        <tr>
+                            <th>Nationality</th>
+                            <td>{$student.NATIONALITY}</td>
+                        </tr>
+                        <tr>
+                            <th>Marital Status</th>
+                            <td>{$student.MARITAL_STATUS}</td>
+                        </tr>
+                        <tr>
+                            <th>HS. Graduate Year</th>
+                            <td>{$student.HIGH_SCHOOL_GRADUATED_YEAR}</td>
+                        </tr>
+                        <tr>
+                            <th>From Province</th>
+                            <td>{$student.FROM_PROVINCE}</td>
+                        </tr>
+                        <tr>
+                            <th>From Heigh School</th>
+                            <td class="limon">{$student.FROM_HIGH_SCHOOL_NAME_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Job</th>
+                            <td>{$student.STUDENT_JOB}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{$student.STATUS}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="panel panel-primary">
-                <div class="panel-heading">Personal Information</div>
+                <div class="panel-heading">Academic Information</div>
                 <div class="panel-body">
-                    <p>Name : {$student.STUDENT_NAME}
-                    <p>Name In Khmer: <span class="limon">{$student.STUDENT_NAME_IN_KHMER}</span></p>
-                    <p>Gender: {$student.SEX}</p>
-                    <p>Date of birth: {$student.DATE_OF_BIRTH|date_format:"%d/%m/%Y"}</p>
-                    <p>Place of birth: {$student.POB_PROVINCE}</p>
-                    <p>Race: {$student.RACE}</p>
-                    <p>Nationality: {$student.NATIONALITY}</p>
-                    <p>Marital Status: {$student.MARITAL_STATUS}</p>
-                    <p>HS. Graduate Year: {$student.HIGH_SCHOOL_GRADUATED_YEAR}</p>
-                    <p>From Province: {$student.FROM_PROVINCE}</p>
-                    <p>From Heigh School: <span class="limon">{$student.FROM_HIGH_SCHOOL_NAME_IN_KHMER} <span> </p>
-                    <p>Job: {$student.STUDENT_JOB}</p>
-                    <p>Status: {$student.STATUS}</p>
+                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                        <tr>
+                            <th>Degree Name</th>
+                            <td>{$group.DEGREE}</td>
+                        </tr>
+                        <tr>
+                            <th>Degree Name In Khmer</th>
+                            <td class="limon">{$group.DEGREE_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>School Name</th>
+                            <td>{$group.SCHOOL_NAME}</td>
+                        </td>
+                        <tr>
+                            <th>School Name In Khmer</th>
+                            <td class="limon">{$group.SCHOOL_NAME_IN_KHMER}</td>
+                        </td>
+                        <tr>
+                            <th>Field Name</th>
+                            <td>{$group.FIELD_NAME}</td>
+                        </td>
+                        <tr>
+                            <th>Promotion</th>
+                            <td>{$group.PROMOTION_NO}</td>
+                        </td>
+                        <tr>
+                            <th>Stage</th>
+                            <td>{$group.STAGE_NO}</td>
+                        </td>
+                        <tr>
+                            <th>Term</th>
+                            <td>{$group.TERM_NO}</td>
+                        </td>
+                        <tr>
+                            <th>Group</th>
+                            <td>{$group.GROUP_NAME}</td>
+                        </td>
+                        <tr>
+                            <th>Student Time</th>
+                            <td></td>
+                        </td>
+                        <tr>
+                            <th>Room</th>
+                            <td></td>
+                        </td>
+                    </table>
                 </div>
             </div>
         </div>
@@ -48,15 +124,40 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Personal & Relative Contact</div>
                 <div class="panel-body">
-                    <p>Phone Number: {$student.PHONE}</p>
-                    <p>Email: {$student.EMAIL}</p>
-                    <p>Address: {$student.ADDRESS}</p>
-                    <p>Address In Khmer: <span class="limon">{$student.ADDRESS_IN_KHMER}</span></p>
-
-                    <p>Relative Name: <span class="limon">{$student.CONTACT_PERSON_NAME}</span></p>
-                    <p>Relative Job: <span class="limon">{$student.CONTACT_PERSON_JOB}</span></p>
-                    <p>Relative Phone: <span class="limon">{$item.CONTACT_PERSON_PHONE}</span></p>
-                    <p>Relative Address :<span class="limon">{$student.CONTACT_ADDRESS}</span></p>
+                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                        <tr>
+                            <th>Phone Number</th>
+                            <td>{$student.PHONE}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{$student.EMAIL}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{$student.ADDRESS}</td>
+                        </tr>
+                        <tr>
+                            <th>Address In Khmer</th>
+                            <td class="limon">{$student.ADDRESS_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Relative Name</th>
+                            <td class="limon">{$student.CONTACT_PERSON_NAME}</td>
+                        </tr>
+                        <tr>
+                            <th>Relative Job</th>
+                            <td class="limon">{$student.CONTACT_PERSON_JOB}</td>
+                        </tr>
+                        <tr>
+                            <th>Relative Phone</th>
+                            <td class="limon">{$item.CONTACT_PERSON_PHONE}</td>
+                        </tr>
+                        <tr>
+                            <th>Relative Address</th>
+                            <td class="limon">{$student.CONTACT_ADDRESS}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -64,10 +165,48 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Parent Informaiton</div>
                 <div class="panel-body">
-                    <p>Mother Name: <span class="limon">{$student.MOTHER_NAME_IN_KHMER}</span></p>
-                    <p>Mother Job: <span class="limon">{$student.MOTHER_OCCUPATION_IN_KHMER}</span></p>
-                    <p>Father Name: <span class="limon">{$student.FATHER_NAME_IN_KHMER}</span></p>
-                    <p>Mother Job: <span class="limon">{$student.FATHER_OCCUPATION_IN_KHMER}</span></p>
+                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                        <tr>
+                            <th>Mother Name</th>
+                            <td class="limon">{$student.MOTHER_NAME_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Mother Job</th>
+                            <td class="limon">{$student.MOTHER_OCCUPATION_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Father Name</th>
+                            <td class="limon">{$student.FATHER_NAME_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Father Job</th>
+                            <td class="limon">{$student.FATHER_OCCUPATION_IN_KHMER}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="clearfix"></div>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Payment  </div>
+                <div class="panel-body">
+                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                        <tr>
+                            <th>Term</th>
+                            <th>Paid</th>
+                            <th>Deposit</th>
+                        </tr>
+                    {foreach from=$payment item=item}
+                        <tr title="{$item.INVOICE_DATE|date_format:"%Y-%m-%d"}">
+                            <td>{$item.TERM_NO}</td>
+                            <td>{$item.PAID|number_format:2}$</td>
+                            <td>{$item.DEPOSIT|number_format:2}</td>
+                        </tr>
+                    {/foreach}
+                    </table>
                 </div>
             </div>
         </div>

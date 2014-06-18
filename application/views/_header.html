@@ -40,22 +40,29 @@
                         <img src="/assets/img/logo.jpg" alt="BBU Logo">
                     </div>
                     <div id="user-menu">
-                        <ul>
-                        {if $ci->session->userdata("user_name")}
-                            <li>
-                                <div class="dropdown">
-                                    <a data-toggle="dropdown" href="#" class="user_name">{$ci->session->userdata("user_name")}</a>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                        <li><a href="/student/changepasword">Change Password</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="/user/logout">Logout</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        {else}
-                            <li><a href="/login"​​ data-toggle="modal" data-target="#login">Login</a></li>
-                        {/if}
-                        </ul>
+                        <div class="user-menu-container">
+                            <ul>
+                            {if $ci->session->userdata("STUDENT_ID")}
+                                <li>
+                                    <div class="dropdown">
+                                        <a data-toggle="dropdown" href="#" class="user-name">{$ci->session->userdata("STUDENT_NAME")}</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <li><a href="/student/changepasword">Change Password</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="/user/logout">Logout</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            {else}
+                                <li><a href="/login"​​ data-toggle="modal" data-target="#login">Login</a></li>
+                            {/if}
+                            </ul>
+                        </div>
+                        <div class="user-detail">
+                            {if $ci->session->userdata("STUDENT_ID")}
+                                Promotion: {$ci->session->userdata("PROMOTION_NO")}, Stage: {$ci->session->userdata("STAGE_NO")}, Term: {$ci->session->userdata("TERM_NO")}, Group: {$ci->session->userdata("GROUP_NAME")}
+                            {/if}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,9 +72,8 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="#">MIS</a></li>
                     <li><a href="#">Adcademic</a></li>
-                    {if $ci->session->userdata("is_student")}
+                    {if $ci->session->userdata("STUDENT_ID")}
                     <li><a href="/student/score">Score</a></li>
-                    <li><a href="/student/payment">Payment</a></li>
                     <li><a href="/student/info">Infomation</a></li>
                     {/if}
                 </ul>

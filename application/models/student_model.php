@@ -149,17 +149,26 @@ FROM
 	V_THAISAN_STUDENT_GROUP_HISTORY g
 WHERE
 	g.STUDENT_ID = ?
+AND TERM_NO = (
+	SELECT
+		MAX (TERM_NO)
+	FROM
+		V_THAISAN_STUDENT_GROUP_HISTORY gr
+	WHERE
+		gr.STUDENT_ID = ?
+)
 SQL;
 		$sqlsrv = $this->load->database('BBU', TRUE);
 
 		$res = $sqlsrv->query(
 			$sql,
 			array(
+				$student_id,
 				$student_id
 			)
 		);
 
-		return $res->result_array();
+		return $res->row_array();
 	}
 
 	public function payment($student_id)

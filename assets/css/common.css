@@ -73,20 +73,6 @@ li {
 	color: #eee;
 }
 
-.jumbotron {
-	padding: 0 !important;
-}
-
-.jumbotron img {
-	width: 100%;
-	height: auto;
-	border-radius: 6px;
-}
-
-.user-name {
-	color: #fff;
-}
-
 html, body {
 	height: 100%;
 	overflow: auto;
@@ -132,7 +118,7 @@ html, body {
 
 #banner img {
 	width: 100%;
-	height: auto;
+	height: 420px;
 }
 
 #footer {
@@ -150,8 +136,9 @@ html, body {
 }
 
 #user-menu {
-	margin-top: 25px;
+	margin: 25px 0;
 	float: right;
+	color: #fff;
 }
 
 #user-menu>ul {
@@ -198,12 +185,31 @@ html, body {
 	content: '';
 }
 
-.user_name:link,
-.user_name:visited,
-.user_name:active,
-.user_name {
+.user-name {
+	display: block;	
+	color: #fff;
+	font-size: 1.6em;
+	text-align: right;
+}
+
+.user-menu-container>ul>li>a {
+	color: #fff;
+}
+
+.user-name:link,
+.user-name:visited,
+.user-name:active,
+.user-name {
 	color: #fff;
 	text-transform: capitalize;
+}
+
+.user-name:focus {
+	outline: none;
+}
+
+.user-detail {
+	font-size: 0.9em;
 }
 
 .modal-open {
@@ -238,6 +244,17 @@ html, body {
     overflow: inherit !important;
 }
 
+/* Bootstrap */
+
 .panel > .panel-heading {
 	font-size: 1.3em;
+	background: #0E51A2;
+}
+
+.panel-primary {
+	border-color: #0E51A2;
+}
+
+.carousel-control {
+	background: none !important;
 }

@@ -31,9 +31,7 @@ class Home extends CI_Controller {
 			$result = $this->Student_Model->login($student_id, $password);
 			// Check User Name and Password
 			if ($result && $result['result'] == 1) {
-				$this->session->set_userdata("user_id", $result['student_id']);
-				$this->session->set_userdata("user_name", $result['student_name']);
-				$this->session->set_userdata("is_student", true);
+				$this->session->set_userdata($this->Student_Model->group($result['student_id']));
 				$status = array('status' => "OK", 'url' => "/student/score");
 			}else{
 				$status = array('status' => "FAIL", 'url' => "/login");
