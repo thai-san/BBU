@@ -1,6 +1,14 @@
             <div id="footer">
                 <div class="container">
-                    &copy; {$smarty.now|date_format:"%Y"} Build Bright University
+                    <div class="row">
+                        <div class="col-md-6">
+                            &copy; {$smarty.now|date_format:"%Y"} Build Bright University
+                            
+                        </div>
+                        <div class="col-md-6 debug">
+                            Memory: {$ci->benchmark->memory_usage()}, Loading: {$ci->benchmark->elapsed_time()} sec
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -258,3 +258,9 @@ html, body {
 .carousel-control {
 	background: none !important;
 }
+
+/* Debug */
+
+.debug {
+	text-align: right;
+}
