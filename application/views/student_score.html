@@ -1,6 +1,11 @@
-{include file='_header.html' title='Student'}
+{include file='_header.html' title='Student' page='score'}
     <div id="content">
         <div class="container">
+        {if $ci->session->userdata("STUDENT_ID")}
+            <div class="col-md-12">
+                <div class="alert alert-info"><i class="fa fa-info-circle"></i> <span class="limon">kñúgkrNIFøak;muxviC¢axageRkam ³ sUmnisSitmkTak;Tgkarriyal½yfñak;qñaMsikSamUldæan b¤karriyal½ysikSaedImb,Idak;Bakü Rblgsg b¤eronsg .<i>elxTUrs½BÞkariyal½y 098 550 005</i></span></div>
+            </div>
+        {/if}
 {$term=0}
 {foreach from=$score item=item}
     {if $term != $item.TERM_NO}

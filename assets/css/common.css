@@ -263,3 +263,19 @@ html, body {
 .debug {
 	text-align: right;
 }
+#navigation a.active {
+	position: relative;
+}
+
+#navigation a.active:after {
+    left: 50%;
+    margin-left: -5px;
+    position: absolute;
+    top: 100%;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-left: 5px solid transparent;
+    border-top: 5px solid #01326d;
+    border-right: 5px solid transparent;
+}

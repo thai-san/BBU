@@ -69,20 +69,13 @@
         <div id="navigation">
             <div class="container">
                 <ul class="nav nav-pills">
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/"{if $page eq "home"}class="active"{/if}>Home</a></li>
                     <li><a href="#">MIS</a></li>
-                    <li><a href="#">Adcademic</a></li>
+                    <li><a href="#" {if $page eq "adcademic"}class="active"{/if}>Adcademic</a></li>
                     {if $ci->session->userdata("STUDENT_ID")}
-                    <li><a href="/student/score">Score</a></li>
-                    <li><a href="/student/info">Infomation</a></li>
+                    <li><a href="/student/score" {if $page eq "score"}class="active"{/if}>Score</a></li>
+                    <li><a href="/student/info"{if $page eq "info"}class="active"{/if}>Infomation</a></li>
                     {/if}
                 </ul>
             </div>
         </div>
-        {if $ci->session->userdata("STUDENT_ID")}
-        <div class="container">
-            <div class="alert alert-warning limon">kñúgkrNIFøak;muxviC¢axageRkam ³ sUmnisSitmkTak;Tgkarriyal½yfñak;qñaMsikSamUldæan b¤karriyal½ysikSaedImb,Idak;Bakü Rblgsg b¤eronsg .<i>
-elxTUrs½BÞkariyal½y 098 550 005</i>
-</div>
-        </div>
-        {/if}
