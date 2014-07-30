@@ -2,16 +2,13 @@
 
     <div id="banner">
         <div class="container">
-            <div id="ads" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
+            <!-- <div id="ads" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#ads" data-slide-to="0" class="active"></li>
                     <li data-target="#ads" data-slide-to="1"></li>
                     <li data-target="#ads" data-slide-to="2"></li>
                 </ol>
 
-                <!-- Wrapper for slides --> 
-                <!-- image size 1140px x 430px -->
                 <div class="carousel-inner">
                     <div class="item active">
                         <img src="/assets/img/slide/baner.jpg" alt="">
@@ -24,16 +21,33 @@
                     </div>
                 </div>
 
-                <!-- Controls -->
+
                 <a class="left carousel-control" href="#ads" data-slide="prev">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
                 <a class="right carousel-control" href="#ads" data-slide="next">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
+            </div> -->
+            <!-- image size 1140px x 430px -->
+            <script>$(window).load(function() { $('.flexslider').flexslider({ animation: "fade", controlNav: false }); });</script>
+
+            <div class="flexslider">
+                <ul class="slides">
+                    <li>
+                        <img src="/assets/img/slide/banner_web_master.jpg" alt="">
+                    </li>
+                    <li>
+                        <img src="/assets/img/slide/baner.jpg" alt="">
+                    </li>
+                    <li>
+                        <img src="/assets/img/slide/banerit.jpg" alt="">
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+
 
     <div id="content">
         <div class="container">

@@ -279,3 +279,8 @@ html, body {
     border-top: 5px solid #01326d;
     border-right: 5px solid transparent;
 }
+
+#banner .flexslider{
+	max-width: 1170px;
+	margin: 0 auto;
+}

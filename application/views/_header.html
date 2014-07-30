@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/assets/css/alertify.core.css"  media="screen">
     <link rel="stylesheet" href="/assets/css/alertify.default.css"  media="screen">
     <link rel="stylesheet" href="/assets/css/dashboard.css"  media="screen">
+    <link rel="stylesheet" href="/assets/css/flexslider.css">
     <link rel="stylesheet" href="/assets/css/common.css"  media="screen">
     <!--[if lt IE 9]>
       <script src="/assets/bootstrap/js/html5shiv.js"></script>
@@ -20,16 +21,7 @@
     <script src="/assets/js/jquery-2.0.3.min.js"></script>
     <script src="/assets/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="/assets/js/jquery.form.min.js"></script>
-    {if $ci->session->flashdata("message")}
-    <script src="/assets/js/alertify.min.js"></script>
-    <script>
-        function notify () {
-            alertify.log("{$ci->session->flashdata('message')}");
-        }
-        window.onload = notify;
-    </script>
-    {/if}
-
+    <script src="/assets/js/jquery.flexslider-min.js"></script>
 </head>
 <body>
     <div id="page">
@@ -53,15 +45,28 @@
                                         </ul>
                                     </div>
                                 </li>
+                            {else if $ci->session->userdata("user_id")}
+                                <li>
+                                    <div class="dropdown">
+                                        <a data-toggle="dropdown" href="#" class="user-name">{$ci->session->userdata("user_name")}</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <li><a href="/user/changepasword">Change Password</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="/user/logout">Logout</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
                             {else}
                                 <li><a href="/login"​​ data-toggle="modal" data-target="#login">Login</a></li>
                             {/if}
                             </ul>
                         </div>
                         <div class="user-detail">
-                            {if $ci->session->userdata("STUDENT_ID")}
-                                Promotion: {$ci->session->userdata("PROMOTION_NO")}, Stage: {$ci->session->userdata("STAGE_NO")}, Term: {$ci->session->userdata("TERM_NO")}, Group: {$ci->session->userdata("GROUP_NAME")}
-                            {/if}
+                        {if $ci->session->userdata("STUDENT_ID")}
+                            Promotion: {$ci->session->userdata("PROMOTION_NO")}, Stage: {$ci->session->userdata("STAGE_NO")}, Term: {$ci->session->userdata("TERM_NO")}, Group: {$ci->session->userdata("GROUP_NAME")}
+                        {else if $ci->session->userdata("user_id")}
+                            Welcome back {$ci->session->userdata("user_name")}
+                        {/if}                       
                         </div>
                     </div>
                 </div>
@@ -69,12 +74,15 @@
         <div id="navigation">
             <div class="container">
                 <ul class="nav nav-pills">
-                    <li><a href="/"{if $page eq "home"}class="active"{/if}>Home</a></li>
+                    <li><a href="/" {if $page eq "home"}class="active"{/if}>Home</a></li>
                     <li><a href="#">MIS</a></li>
                     <li><a href="#" {if $page eq "adcademic"}class="active"{/if}>Adcademic</a></li>
                     {if $ci->session->userdata("STUDENT_ID")}
                     <li><a href="/student/score" {if $page eq "score"}class="active"{/if}>Score</a></li>
-                    <li><a href="/student/info"{if $page eq "info"}class="active"{/if}>Infomation</a></li>
+                    <li><a href="/student/info" {if $page eq "info"}class="active"{/if}>Infomation</a></li>
+                    {/if}
+                    {if $ci->session->userdata("user_id")}
+                    <li><a href="/dashboard" {if $page eq "dashboard"}class="active"{/if}>dashboard</a></li>
                     {/if}
                 </ul>
             </div>

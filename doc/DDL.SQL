@@ -50,3 +50,7 @@ CREATE TABLE books (
 	PRIMARY KEY (book_id),
 	FOREIGN KEY (book_uploader) REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB CHARACTER SET 'utf8';
+
+CREATE TABLE seen (
+
+)
