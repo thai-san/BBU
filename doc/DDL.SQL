@@ -25,7 +25,6 @@ CREATE TABLE students (
 
 CREATE TABLE posts (
 	post_id			INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	post_type		ENUM('PDF','IMAGE'),
 	post_title		VARCHAR(255) NOT NULL,
 	post_attachment VARCHAR(255),
 	post_description TEXT NOT NULL,
