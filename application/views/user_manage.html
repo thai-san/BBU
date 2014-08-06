@@ -1,0 +1,57 @@
+{include file='_header.html' title='User' page='dashboard'}
+<div class="page-container">
+    <div class="sidebar-container">
+        <div class="sidebar" id="sidebar">
+            {include file='_sidebar.html' active="user"}
+        </div>
+    </div>
+    <div class="page-content" id="page-content">
+        <h2 class="page-header"><i class="fa fa-user"></i> User</h2>
+        <p><i class="fa fa-plus"></i> <a href="/dashboard/user/addnew">Create New User</a></p>
+        <table class="table table-bordered">
+            <tr>
+                <th>User Name</th>
+                <th>Total Post</th>
+                <th>Group</th>
+                <th>Create Date</th>
+                <th>Option</th>
+            </tr>
+            {foreach from=$users item=item}
+            <tr>
+                <td>{$item.user_name}</td>
+                <td>{$item.total_post}</td>
+                <td>
+                    <form action="/user/groupchange/{$item.user_id}" method="post" id="user_group_change">
+                        <input type="hidden" name="user_id" value="{$item.user_id}">
+                        <select name="group_id" id="group_id" onchange="enable_save_group(this)">
+                            {foreach from=$groups item=group}
+                            <option value="{$group.group_id}" {if $group.group_id eq $item.group_id}selected{/if}>{$group.group_name}</option>
+                            {/foreach}
+                        </select>
+                        <span class="change_group_control">
+                            <button class="btn btn-link btn-sm btn_save_group">Save</button> |
+                            <button type="reset" class="btn btn-link btn-sm btn_cancel_group" onclick="hide_group_control(this)">Cancel</button>
+                        </span>
+                    </form>
+                </td>
+                <td>{$item.user_create_date}</td>
+                <td>
+                    <a href="/user/edit/{$item.user_id}">reset password</a> |
+                    <a href="/user/delete/{$item.user_id}">delete</a> |
+                    <label><input type="checkbox">disable</label>
+                </td>
+            </tr>
+            {/foreach}
+        </table>
+        <script>
+            function enable_save_group(element) {
+                $(element).closest("#user_group_change").find(".change_group_control").css({ visibility: "visible" });
+            }
+
+            function hide_group_control (element) {
+                $(element).closest(".change_group_control").css({ visibility: "hidden" });
+            }
+        </script>
+    </div>
+</div>
+{include file='_footer.html'}

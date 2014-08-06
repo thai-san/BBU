@@ -8,6 +8,7 @@
 }
 
 .bs-callout {
+    display: none;
     margin: 20px 0;
     padding: 15px 30px 15px 15px;
     border-left: 5px solid #eee;
@@ -50,17 +51,23 @@
     border-color: #d0e3f0;
 }
 
+.bs-callout-success {
+    background-color: #F0FFF0;
+    border-color: #4CAE4C; 
+}
+
 .header-container {
     background: #01326D;
     border: 1px solid #023581;
 }
 
 .sidebar-container {
-    width: 235px;
+    width: 170px;
     float: left;
 }
 
 .sidebar {
+    position: relative;
     display: block;
     padding: 20px;
     overflow-x: hidden;
@@ -69,26 +76,74 @@
     border-right: 1px solid #eee;
 }
 
+.sidebar_shadow {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background-image: url(../img/sidebar_shadow.png);
+    background-position: top right;
+    background-repeat: repeat-y;
+}
+
 .page-container {
     overflow: hidden;
+    margin-top: -25px;
 }
 
 .page-content {
-    margin-left: 235px;
-    padding: 25px 20px 10px 20px;
+    overflow: hidden;
+    margin-left: 170px;
+    padding: 0 20px 10px 20px;
 }
 
 /* Sidebar navigation */
+.sidebar>ul:first-child>li>a {
+    border-top: 1px solid #DFDFDF;
+}
 .nav-sidebar {
     margin-right: -21px; /* 20px padding + 1px border */
-    margin-bottom: 20px;
     margin-left: -20px;
 }
+
 .nav-sidebar > li > a {
     padding-right: 20px;
     padding-left: 20px;
+    border-bottom:1px solid #DFDFDF;
 }
-.nav-sidebar > .active > a {
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover {
     color: #fff;
     background-color: #428bca;
+}
+.dz-error-message {
+    /*display: none !important;*/
+}
+.file-name {
+    font-weight: bold;
+}
+
+.addpost #post_type_image {
+    display: block;
+}
+
+.addpost #post_type_pdf,
+.addpost #post_type_text {
+    display: none;
+}
+
+
+.change_group_control {
+    visibility: hidden;
+    margin-left: 10px;
+}
+
+.btn-link {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.page-header.middle {
+    text-align: center;
 }

@@ -22,6 +22,32 @@ SQL;
 
 		return $res->row_array();
 	}
+
+	public function manage() {
+		$sql = <<<SQL
+SELECT
+	*,
+	(
+		SELECT
+			COUNT(*) AS total_post
+		FROM
+			posts p
+		WHERE
+			p. OWNER = u.user_id
+	) AS total_post
+FROM
+	users u
+	LEFT JOIN groups g ON (g.group_id = u.group_id)
+SQL;
+		$res = $this->db->query(
+			$sql,
+			array(
+
+			)
+		);
+
+		return $res->result_array();
+	}
 }
 
 /* End of file user_model.php */

@@ -23,4 +23,5 @@ $(window).load(function() {
 
 $(function() {
     $('#tab').tab('show');
+    $(".bs-callout").slideDown();
 })

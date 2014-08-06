@@ -1,0 +1,55 @@
+{include file='_header.html' title='Home' page='dashboard'}
+<div class="page-container">
+    <div class="sidebar-container">
+        <div class="sidebar" id="sidebar">
+            {include file='_sidebar.html' active="group"}
+        </div>
+    </div>
+    <div class="page-content" id="page-content">
+        <h2 class="page-header"><i class="fa fa-users"></i> Group</h2>
+            <p><i class="fa fa-plus"></i> <a href="/dashboard/group/addnew">Create New Group</a></p>
+            {if validation_errors()}
+                <div class="bs-callout bs-callout-danger">
+                    <h4>Input Error</h4>
+                    {validation_errors()}
+                </div>
+            {/if}
+            {if $ci->session->flashdata("message")}
+                <div class="bs-callout bs-callout-{$ci->session->flashdata('status')}">
+                    <h4>{$ci->session->flashdata('title')}</h4>
+                    {$ci->session->flashdata('message')}
+                </div>
+                <script>
+                    $(function() { $(".bs-callout").slideDown(); })
+                </script>
+            {/if}
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#Id</th>
+                            <th>Group Name</th>
+                            <th>Total User</th>
+                            <th>Create Date</th>
+                            <th>Option</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach from=$groups item=item}
+                            <tr>
+                                <td>{$item.group_id}</td>
+                                <td>{$item.group_name}</td>
+                                <td>{$item.total_user}</td>
+                                <td>{$item.group_create_date}</td>
+                                <td>
+                                    <a href="/group/edit/{$item.group_id}">Edit</a> |
+                                    <a href="/group/delete/{$item.group_id}" onclick="return confirm('Are you sure want to delete group {$item.group_name} ?')">Delete</a>
+                                </td>
+                            </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+{include file='_footer.html'}

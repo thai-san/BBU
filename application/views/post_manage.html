@@ -1,0 +1,46 @@
+{include file='_header.html' page='dashboard'}
+
+<div class="page-container">
+    <div class="sidebar-container">
+        <div class="sidebar" id="sidebar">
+            {include file='_sidebar.html' active="postmanage"}
+        </div>
+    </div>
+
+    <div class="page-content" id="page-content">
+        <h2 class="page-header">Manage Post</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#Id</th>
+                        <th>Type</th>
+                        <th>Create Date</th>
+                        <th>Expire Date</th>
+                        <th>Enable</th>
+                        <th>Visitor</th>
+                        <th>Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach from=$posts item=item}
+                    <tr>
+                        <td>{$item.post_id}</td>
+                        <td>{$item.post_type}</td>
+                        <td>{$item.post_date}</td>
+                        <td>{$item.expire_date}</td>
+                        <td>{$item.is_enable}</td>
+                        <td>0</td>
+                        <td>
+                            <a href="#">View</a> |
+                            <a href="/dashboard/editpost/{$item.post_id}">Edit</a> |
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{include file='_footer.html'}

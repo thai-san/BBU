@@ -1,0 +1,122 @@
+{include file='_header.html' page='dashboard'}
+
+<div class="page-container">
+    <div class="sidebar-container">
+        <div class="sidebar" id="sidebar">
+            {include file='_sidebar.html' active="newpost"}
+        </div>
+    </div>
+    <div class="page-content" id="page-content">
+        <div class="col-md-8">
+            <h2 class="page-header"><i class="fa fa-paste"></i> Add New Post</h2>
+            
+            {* form validate error *}
+            {if validation_errors()}
+                <div class="bs-callout bs-callout-danger">
+                    <h4>Input Error</h4>
+                    {validation_errors()}
+                </div>
+            {/if}
+
+            {* session message *}
+            {if $ci->session->flashdata("message")}
+                <div class="bs-callout bs-callout-{$ci->session->flashdata('status')}">
+                    <h4>{$ci->session->flashdata('title')}</h4>
+                    {$ci->session->flashdata('message')}
+                </div>
+                <script>
+                    $(function() { $(".bs-callout").slideDown(); })
+                </script>
+            {/if}
+
+            {* Upload error *}
+            {if $error}
+                <div class="bs-callout bs-callout-danger">
+                    <h4>Upload File</h4>
+                    {$error}
+                </div>
+            {/if}
+
+
+            {form_open_multipart("/post/addnew", ['class' => 'addpost'])}
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type='text' class="form-control" name='post_title' value='{set_value("post_title")}' required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <p><b>Post Type</b></p>
+                    <label class="radio-inline">
+                        <input type="radio" id="radio_post_type_image" name="post_type" value="IMAGE" checked onchange="change_input(this.value)"> Image
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" id="radio_post_type_pdf" name="post_type" value="PDF" onchange="change_input(this.value)"> PDF
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" id="radio_post_type_text" name="post_type" value="TEXT" onchange="change_input(this.value)"> Text
+                    </label>
+                </div>
+
+                <div class="form-group" id="post_type_image">
+                    <label for="input_type_image">Choose Image file</label>
+                    <input id="input_type_image" name="input_type_image[]" type="file" multiple accept="image/*" onchange="select_post_type(this.value)">
+                </div>
+
+                <div class="form-group" id="post_type_pdf">
+                    <label for="input_type_pdf">Choose PDF file</label>
+                    <input id="input_type_pdf" name="input_type_pdf[]" type="file" multiple accept="application/pdf" onchange="select_post_type(this.value)">
+                </div>
+
+                <div class="form-group" id="post_type_text">
+                    <label>Description</label>
+                    <textarea id="input_type_text" class="form-control" name='post_description' cols='60' rows='10'>{set_value("post_content")}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <br>
+                    <input type='submit' class="btn btn-primary" name='submit' value='Publish'>
+                </div>
+
+            </form>
+        </div>
+        
+        <div class="col-md-4"></div>
+
+    </div>
+</div>
+<script>
+
+    var IMAGE = document.getElementById('post_type_image');
+    var PDF = document.getElementById('post_type_pdf');
+    var TEXT = document.getElementById('post_type_text');
+    
+    var input_image = document.getElementById('input_type_image');
+    var input_pdf = document.getElementById('input_type_pdf');
+    var input_text = document.getElementById('input_type_text');
+
+    window.onload = change_input();
+
+    function change_input (type) {
+        
+        switch (type) {
+            case 'PDF':
+                IMAGE.style.cssText = "display: none;";
+                PDF.style.cssText = "display: block;";
+                TEXT.style.cssText = "display: none;";
+                input_pdf.focus();
+                break;
+            case 'TEXT':
+                IMAGE.style.cssText = "display: none;";
+                PDF.style.cssText = "display: none;";
+                TEXT.style.cssText = "display: block;";
+                input_text.focus();
+                break;
+            default:
+                IMAGE.style.cssText = "display: block;";
+                PDF.style.cssText = "display: none;";
+                TEXT.style.cssText = "display: none;";
+                input_image.focus();
+        }
+    }
+</script>
+{include file='_footer.html'}
