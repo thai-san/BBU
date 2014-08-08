@@ -9,7 +9,7 @@ class Home extends CI_Controller {
 	}
 
 	public function index() {
-		
+		$data['menu'] = $this->Category_Model->get_list();
 		$categories = $this->Category_Model->get_list();
 
 		foreach ($categories as $key => $value) {
@@ -27,11 +27,15 @@ class Home extends CI_Controller {
 	}
 
 	public function category($category_id) {
-		$this->smarty->view("post_list");
+		$data['menu'] = $this->Category_Model->get_list();
+		$data['category'] = $this->Category_Model->detail($category_id);
+		$data['posts'] = $this->Category_Model->get_all_post($category_id);
+		$this->smarty->view("post_list", $data);
 	}
 
 	public function post($post_id) {
-
+		$data['menu'] = $this->Category_Model->get_list();
+		// prepare date before insert to database
 		$visitor = array(
 			"ip_address" => $this->input->ip_address(),
 			"student_id" =>	$this->session->userdata('STUDENT_ID')?$this->session->userdata('STUDENT_ID'):NULL,

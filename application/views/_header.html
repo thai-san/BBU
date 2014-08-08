@@ -76,7 +76,7 @@
             <div class="container">
                 <ul class="nav nav-pills">
                     <li><a href="/" {if $page eq "home"}class="active"{/if}>Home</a></li>
-                    {foreach from=$categories item=item}
+                    {foreach from=$menu item=item}
                     <li><a href="/home/category/{$item.category_id}">{$item.category_name}</a></li>
                     {/foreach}
                     {if $ci->session->userdata("STUDENT_ID")}
@@ -84,7 +84,7 @@
                     <li><a href="/student/info" {if $page eq "info"}class="active"{/if}>Infomation</a></li>
                     {/if}
                     {if $ci->session->userdata("user_id")}
-                    <li><a href="/dashboard" {if $page eq "dashboard"}class="active"{/if}>dashboard</a></li>
+                    <li><a href="/dashboard" {if $page eq "dashboard"}class="active"{/if}>Dashboard</a></li>
                     {/if}
                 </ul>
             </div>

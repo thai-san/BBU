@@ -6,15 +6,12 @@
 
             <div class="col-md-12">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Final Exame Date</div>
+                    <div class="panel-heading">{$category.category_name}</div>
                     <div class="panel-body">
                         <ul>
-                            <li><p><a href="/post/detail">Title of exam date Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla, quis, provident repellat debitis ad reprehenderit.</a><span class="label label-danger">New</span></p></li>
-                            <li><p><a href="/post/detail">Title of exam date Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, rerum laboriosam veritatis culpa amet distinctio!</a></p></li>
-                            <li><p><a href="/post/detail">Title of exam date Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat fugiat ex eveniet quo soluta omnis.</a><span class="label label-danger">New</span></p></li>
-                            <li><p><a href="/post/detail">Title of exam date Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, facilis quas et ea eos omnis.</a></p></li>
-                            <li><p><a href="/post/detail">Title of exam date Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, at dolore illum molestiae quo neque!</a><span class="label label-danger">New</span></p></li>
-                            <li><p><a href="/post/detail">Title of exam date Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit, blanditiis, quam fuga qui autem a.</a></p></li>
+                            {foreach from=$posts item=item}
+                            <li><p><a href="/home/post/{$item.post_id}">{$item.post_title}.</a></p></li>
+                            {/foreach}
                         </ul>
                     </div>
                 </div>

@@ -75,6 +75,27 @@ SQL;
 
 		return $res->result_array();	
 	}
+
+	public function get_all_post($category_id) {
+		$sql = <<<SQL
+SELECT
+	*
+FROM
+	posts p
+WHERE
+	p.category_id = ?
+ORDER BY
+	p.post_date DESC
+SQL;
+
+		$res = $this->db->query($sql,
+			array(
+				$category_id
+			)
+		);
+
+		return $res->result_array();
+	}
 }
 
 /* End of file category_model.php */
