@@ -77,7 +77,7 @@
                 <ul class="nav nav-pills">
                     <li><a href="/" {if $page eq "home"}class="active"{/if}>Home</a></li>
                     {foreach from=$menu item=item}
-                    <li><a href="/home/category/{$item.category_id}">{$item.category_name}</a></li>
+                    <li><a href="/home/category/{$item.category_id}" {if $page eq $item.category_name}class="active"{/if}>{$item.category_name}</a></li>
                     {/foreach}
                     {if $ci->session->userdata("STUDENT_ID")}
                     <li><a href="/student/score" {if $page eq "score"}class="active"{/if}>Score</a></li>

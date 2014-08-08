@@ -6,10 +6,14 @@ class Post_model extends MY_Model {
 		$sql = <<<SQL
 SELECT
 	p.*,
-	u.group_id
+	u.group_id,
+	g.group_name,
+	c.category_name
 FROM
 	posts p
-	LEFT JOIN users u ON (u.user_id = p. OWNER)
+	LEFT JOIN users u ON (u.user_id = p.OWNER)
+	LEFT JOIN groups g ON (g.group_id = u.group_id)
+	LEFT JOIN categories c ON (c.category_id = p.category_id)
 WHERE
 	p.post_id = ?
 SQL;
@@ -26,7 +30,8 @@ SQL;
 	public function get_all_post() {
 		$sql = <<<SQL
 SELECT
-	*,
+	p.*,
+	u.user_name,
 	(
 		SELECT
 			COUNT(*) AS total_visitor
@@ -37,6 +42,7 @@ SELECT
 	) AS total_visitor
 FROM
 	posts p
+	INNER JOIN users u ON (u.user_id = p.owner)
 SQL;
 
 		$res = $this->db->query(

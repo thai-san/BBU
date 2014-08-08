@@ -6,12 +6,11 @@ class User_Model extends MY_Model {
 		$sql = <<<SQL
 SELECT
 	u.*,
-	g.group_id,
 	g.group_name,
 	COUNT(*) AS result
 FROM
 	users u
-	INNER JOIN groups g on (g.group_id = u.group_id)
+	LEFT JOIN groups g ON (g.group_id = u.group_id)
 WHERE
 	u.user_name = ? && u.password = ?
 SQL;

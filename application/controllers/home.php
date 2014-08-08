@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 	}
 
 	public function index() {
+
 		$data['menu'] = $this->Category_Model->get_list();
 		$categories = $this->Category_Model->get_list();
 
@@ -33,7 +34,14 @@ class Home extends CI_Controller {
 		$this->smarty->view("category_post", $data);
 	}
 
-	public function post($post_id) {
+	public function test() {
+		echo "test";
+	}
+
+	public function post() {
+		
+		$post_id = $this->uri->segment(3, 0);
+
 		$data['menu'] = $this->Category_Model->get_list();
 		// prepare date before insert to database
 		$visitor = array(
@@ -41,6 +49,12 @@ class Home extends CI_Controller {
 			"student_id" =>	$this->session->userdata('STUDENT_ID')?$this->session->userdata('STUDENT_ID'):NULL,
 			"post_id" => $post_id
 		);
+		
+		if (!$this->Post_Model->row_exists($post_id)) {
+			show_404("Post");
+			exit();
+		} 
+
 		// Insert visitor information
 		$this->Visitor_Model->insert($visitor);
 		// detial current post

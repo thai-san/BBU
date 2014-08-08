@@ -14,10 +14,10 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Post ID</th>
-                        <th>Title</th>
+                        <th style="width:50%">Post Title</th>
                         <th>Create Date</th>
                         <th>Expire Date</th>
+                        <th>Author</th>
                         <th>Enable</th>
                         <th>Total Visitor</th>
                         <th>Option</th>
@@ -26,14 +26,14 @@
                 <tbody>
                 {foreach from=$posts item=item}
                     <tr>
-                        <td>{$item.post_id}</td>
                         <td>{$item.post_title}</td>
                         <td title="{$item.post_date}">{$item.post_date|date_format:'%Y-%m-%d'}</td>
                         <td>{$item.expire_date}</td>
+                        <td>{$item.user_name}</td>
                         <td>{$item.is_enable}</td>
                         <td>{$item.total_visitor}</td>
                         <td>
-                            <a href="/home/post/{$item.post_id}">View</a> |
+                            <a href="/home/post/{$item.post_id}" target="_blank">View</a> |
                             <a href="/dashboard/editpost/{$item.post_id}">Edit</a> |
                             <a href="/dashboard/deletepost/{$item.post_id}">Delete</a>
                         </td>

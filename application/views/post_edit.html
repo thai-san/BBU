@@ -8,33 +8,7 @@
     <div class="page-content" id="page-content">
         <div class="col-md-8">
             <h2 class="page-header"><i class="fa fa-paste"></i> Edit Post</h2>
-            {* form validate error *}
-            {if validation_errors()}
-                <div class="bs-callout bs-callout-danger">
-                    <h4>Input Error</h4>
-                    {validation_errors()}
-                </div>
-            {/if}
-
-            {* session message *}
-            {if $ci->session->flashdata("message")}
-                <div class="bs-callout bs-callout-{$ci->session->flashdata('status')}">
-                    <h4>{$ci->session->flashdata('title')}</h4>
-                    {$ci->session->flashdata('message')}
-                </div>
-                <script>
-                    $(function() { $(".bs-callout").slideDown(); })
-                </script>
-            {/if}
-            
-            {* Upload error *}
-            {if $error}
-                <div class="bs-callout bs-callout-danger">
-                    <h4>Upload File</h4>
-                    {$error}
-                </div>
-            {/if}
-
+            {include file='_message.html'}
             {form_open_multipart("/post/update/`$post.post_id`")}
                 <div class="form-group">
                     <label>Title</label>

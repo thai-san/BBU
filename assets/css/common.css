@@ -288,3 +288,11 @@ html, body {
 table tr.danger td {
 	background: #f2dede !important;
 }
+
+.post_info {
+	font-size: 12px;
+}
+
+.post_title {
+	text-transform: capitalize;
+}

@@ -7,21 +7,7 @@
     </div>
     <div class="page-content" id="page-content">
         <h2 class="page-header">Create New Group</h2>
-        {if validation_errors()}
-            <div class="bs-callout bs-callout-danger">
-                <h4>Input Error</h4>
-                {validation_errors()}
-            </div>
-        {/if}
-        {if $ci->session->flashdata("message")}
-            <div class="bs-callout bs-callout-{$ci->session->flashdata('status')}">
-                <h4>{$ci->session->flashdata('title')}</h4>
-                {$ci->session->flashdata('message')}
-            </div>
-            <script>
-                $(function() { $(".bs-callout").slideDown(); })
-            </script>
-        {/if}
+        {include file='_message.html'}
         <div class="col-md-10">
             <form class="form-horizontal" action="/group/addnew" method="post" role="form" autocomplete="off">
 

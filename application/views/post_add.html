@@ -9,32 +9,7 @@
     <div class="page-content" id="page-content">
         <div class="col-md-8">
             <h2 class="page-header"><i class="fa fa-envelope-o"></i> Add New Post</h2>
-            
-            {if validation_errors()}
-                <div class="bs-callout bs-callout-danger">
-                    <h4>Input Error</h4>
-                    {validation_errors()}
-                </div>
-            {/if}
-
-            {if $ci->session->flashdata("message")}
-                <div class="bs-callout bs-callout-{$ci->session->flashdata('status')}">
-                    <h4>{$ci->session->flashdata('title')}</h4>
-                    {$ci->session->flashdata('message')}
-                </div>
-                <script>
-                    $(function() { $(".bs-callout").slideDown(); })
-                </script>
-            {/if}
-
-            {if $error}
-                <div class="bs-callout bs-callout-danger">
-                    <h4>Upload File</h4>
-                    {$error}
-                </div>
-            {/if}
-            
-            
+            {include file='_message.html'}
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active"><a href="#Image" role="tab" data-toggle="tab">Image</a></li>

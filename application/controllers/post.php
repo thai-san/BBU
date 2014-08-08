@@ -11,10 +11,8 @@ class Post extends MY_Controller {
 	}
 
 	public function index() {
+		// get category menu
 		$data['menu'] = $this->Category_Model->get_list();
-
-		// initailize data
-		$data['posts'] = array();
 		// if user admin can see all post
 		if ($this->user['is_admin'] == 1) {
 			$data['posts'] = $this->Post_Model->get_all_post();
@@ -37,7 +35,7 @@ class Post extends MY_Controller {
 				$this->post_type_text(); // post_type text
 				break;
 			default:
-				$this->post_type_image(); // post_type image
+				$this->insert_post_type_image(); // post_type image
 		}
 	}
 
@@ -45,7 +43,8 @@ class Post extends MY_Controller {
 		
 		$post_id = $this->uri->segment(3, 0);
 		
-		if ($post_id != 0) {
+		// Check Post exists
+		if ($this->Post_Model->row_exists($post_id)) {
 			
 			$post = $this->Post_Model->detail($post_id);
 			
@@ -59,23 +58,24 @@ class Post extends MY_Controller {
 				default:
 					$this->update_post_type_image($post_id); // post_type image
 			}
-		// No form submit just load add new post normal
+		// No post exist
 		} else {
-			$this->redirect("/dashboard/editpost/{$post_id}");
+			show_404(); exit();
 		}
 	}
 
-	public function post_type_image(){
+	public function insert_post_type_image(){
+		// get menu
 		$data['menu'] = $this->Category_Model->get_list();
-
 		// setup rule for differance post_type
-		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
+		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>'); // Error HTML Tage
 		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
 		$this->form_validation->set_rules('expire_date', '<b>Expire Date</b>', 'required');  // rule for title
 		// process form validation
 		if ($this->form_validation->run()) {
 			// if file was upload
 			if ($this->process_file_upload('input_type_image', 'IMAGE')) {
+
 				// prepare data before input to database
 				$data = array(
 					"post_title" => trim($this->input->post('post_title')),
@@ -83,9 +83,10 @@ class Post extends MY_Controller {
 					"expire_date" => $this->input->post('expire_date'),
 					"owner" => $this->session->userdata("user_id")
 				);
+
 				// insert post data to database return post_id
 				$post_id = $this->Post_Model->insert($data);
-				// if have post_id it mean new post is success input
+				// check insert result
 				if ($post_id) {
 					// send messsage back to user
 					$this->send_message("Add new post", "a post added", "success");
@@ -99,16 +100,25 @@ class Post extends MY_Controller {
 						$file['file_owner'] = $this->user["user_id"];
 						// insert to Files Table
 						$file_id = $this->File_Model->insert($file);
-						// insert to Attachement Table
-						$this->Attachment_Model->insert(
-							array(
-								"post_id" => $post_id,
-								"file_id" => $file_id
-							)
-						);
+						// check result then insert to database
+						if ($file_id) {
+							// insert to Attachement Table
+							$this->Attachment_Model->insert(
+								array(
+									"post_id" => $post_id,
+									"file_id" => $file_id
+								)
+							);
+						}
 					}
 					// redirect user to edit post/post_id
 					$this->redirect("/dashboard/editpost/{$post_id}"); 
+					// insert fail
+				} else {
+					// send messsage back to user
+					$this->send_message("Create new post", "Can not create new post. Please try again", "warning");
+					// redirect user back to post add
+					$this->redirect("/post/add"); 
 				}
 			//image upload error
 			} else { 
@@ -490,6 +500,7 @@ class Post extends MY_Controller {
 		
 		$config['upload_path'] = UPLOAD_PATH;
 		$config['encrypt_name'] = TRUE;
+		$config['max_size']	= '200'; // KB
 
 		switch ($type) {
 			case 'IMAGE':

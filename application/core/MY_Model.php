@@ -35,4 +35,9 @@ class MY_Model extends CI_Model {
 
 		return (($res = $this->db->get($this->table)) ? $res->result_array() : false);
 	}
+
+	public function row_exists($id) {
+
+	    return $this->db->where($this->id, $id)->get($this->table)->num_rows() > 0;
+	}
 }
