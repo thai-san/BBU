@@ -61,7 +61,10 @@ SELECT
 FROM
 	posts p
 WHERE
-	p.category_id = ?	
+	p.category_id = ?
+ORDER BY
+	p.post_date DESC
+LIMIT 10
 SQL;
 
 		$res = $this->db->query($sql,
