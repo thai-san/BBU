@@ -14,6 +14,12 @@ class Dashboard extends CI_Controller {
 	public function index() {
 		$this->smarty->view('dashboard');
 	}
+
+	public function logout(){
+		// Remove all session
+		$this->session->sess_destroy();
+		header("location:/");
+	}
 }
 
 /* End of file dashboard.php */

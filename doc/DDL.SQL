@@ -9,7 +9,8 @@ CREATE TABLE users (
 	user_name	VARCHAR(40) NOT NULL UNIQUE KEY,
 	password	VARCHAR(40) NOT NULL,
 	group_id	INT,
-	is_enable	TINYINT(1) DEFAULT 1,
+	is_enable	TINYINT(1) DEFAULT 1 NOT NULL,
+	is_admin	TINYINT(1) DEFAULT 0 NOT NULL,
 	user_create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (group_id) REFERENCES groups (group_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -23,6 +24,12 @@ CREATE TABLE students (
 	is_enable		TINYINT(1) NOT NULL DEFAULT 1
 );
 
+CREATE TABLE categories (
+	category_id		INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	category_name	VARCHAR(40) NOT NULL,
+	category_create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE posts (
 	post_id			INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	post_title		VARCHAR(255) NOT NULL,
@@ -30,19 +37,11 @@ CREATE TABLE posts (
 	post_description TEXT,
 	post_date		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	owner 			INT NOT NULL,
-	category_id		INT NOT NULL,
+	category_id		INT NOT NULL DEFAULT 1,
 	expire_date		DATE NOT NULL,
-	category_id 	INT NOT NULL,
 	is_enable		TINYINT(1) NOT NULL DEFAULT 1,
-	FOREIGN KEY (owner) REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
-);
-
-CREATE TABLE post_category (
-	category_id		INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	category_name	VARCHAR(40) NOT NULL,
-	category_owner 	INT NOT NULL,
-	category_create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (category_owner) REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
+	FOREIGN KEY (owner) REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	FOREIGN KEY (category_id) REFERENCES categories (category_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE books (
@@ -54,24 +53,56 @@ CREATE TABLE books (
 	FOREIGN KEY (owner) REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE visiters (
+CREATE TABLE visitors (
 	visiter_id	INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	ip_address	VARCHAR(45) DEFAULT '0' NOT NULL,
 	student_id	VARCHAR(40) NULL,
 	post_id	INT NOT NULL,
 	visite_date	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE KEY (ip_address, post_id),
 	FOREIGN KEY (student_id) REFERENCES students (student_id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	FOREIGN KEY (post_id) REFERENCES posts (post_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE sessions (
-	session_id varchar(40) DEFAULT '0' NOT NULL PRIMARY KEY,
-	ip_address varchar(45) DEFAULT '0' NOT NULL,
-	user_agent varchar(120) NOT NULL,
-	last_activity int(10) unsigned DEFAULT 0 NOT NULL,
-	user_data text NOT NULL,
+	session_id VARCHAR(40) DEFAULT '0' NOT NULL PRIMARY KEY,
+	ip_address VARCHAR(45) DEFAULT '0' NOT NULL,
+	user_agent VARCHAR(120) NOT NULL,
+	last_activity INT(10) unsigned DEFAULT 0 NOT NULL,
+	user_data TEXT NOT NULL,
 	KEY `last_activity_idx` (`last_activity`)
 );
 
+CREATE TABLE files (
+	file_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	file_name VARCHAR(50) NOT NULL,
+	file_type VARCHAR(50) NOT NULL,
+	file_path VARCHAR(255) NOT NULL,
+	full_path VARCHAR(255) NOT NULL,
+	raw_name VARCHAR(50) DEFAULT NULL,
+	orig_name VARCHAR(255) DEFAULT NULL,
+	client_name VARCHAR(255) DEFAULT NULL,
+	file_ext VARCHAR(20) DEFAULT NULL,
+	file_size INT DEFAULT NULL,
+	is_image TINYINT(1) DEFAULT NULL,
+	image_width INT DEFAULT NULL,
+	image_height INT DEFAULT NULL,
+	image_type VARCHAR(20) DEFAULT NULL,
+	image_size_str VARCHAR(100) DEFAULT NULL,
+	file_owner INT(11) NOT NULL,
+	file_upload_date timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE attachments (
+	attachment_id INT NOT NULL AUTO_INCREMENT,
+	file_id INT NOT NULL,
+	post_id INT NOT NULL,
+	PRIMARY KEY (attachment_id, file_id, post_id),
+	FOREIGN KEY (file_id) REFERENCES files (file_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	FOREIGN KEY (post_id) REFERENCES posts (post_id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
 -- Insert Test Data
-INSERT INTO users (user_name, password) VALUES ('admin', '202cb962ac59075b964b07152d234b70');
+INSERT INTO groups (group_name) VALUES ('MIS');
+INSERT INTO users (user_name, password, is_admin, group_id) VALUES ('admin', '202cb962ac59075b964b07152d234b70', 1, 1);
+INSERT INTO categories (category_name, category_owner) VALUES ('Uncategory', 1);

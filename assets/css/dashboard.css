@@ -124,15 +124,6 @@
     font-weight: bold;
 }
 
-.addpost #post_type_image {
-    display: block;
-}
-
-.addpost #post_type_pdf,
-.addpost #post_type_text {
-    display: none;
-}
-
 
 .change_group_control {
     visibility: hidden;
@@ -146,4 +137,20 @@
 
 .page-header.middle {
     text-align: center;
+}
+
+input {
+    font-weight: bold;
+}
+
+label {
+    color: #8B8B8B;
+}
+
+.post_date {
+    color: #9197A3;
+}
+
+.panel img{
+    max-width: 100%;
 }

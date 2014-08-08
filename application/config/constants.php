@@ -36,9 +36,15 @@ define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
+// for controller
 define('DEFAULT_PASSWORD', 'bbu');
 define('UPLOAD_PATH', './uploads/');
+define('THUMBNAIL', './uploads/thumbnail/');
+// for view
+define('VUPLOAD_PATH', '/uploads/');
+define('VTHUMBNAIL', '/uploads/thumbnail/');
 
+define("UP_L", "upload");
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

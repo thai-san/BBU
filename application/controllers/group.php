@@ -19,7 +19,7 @@ class Group extends CI_Controller {
  	public function addnew() {
  		// setting up validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
-		$this->form_validation->set_rules('group_name', '<b>Group name</b>', 'trim|required|is_unique[groups.group_name]|min_length[3]|max_length[20]|callback_groupname_check');
+		$this->form_validation->set_rules('group_name', '<b>Group name</b>', 'trim|required|is_unique[groups.group_name]|min_length[3]|max_length[40]|callback_groupname_check');
 		$this->form_validation->set_message('is_unique', 'The %s already exist');
 		// Process form validation
 		if ($this->form_validation->run()){
@@ -64,7 +64,7 @@ class Group extends CI_Controller {
  	}
 
  	public function groupname_check($group_name) {
-		if (preg_match('/^[A-Za-z][A-Za-z0-9]{2,20}$/', $group_name)) {
+		if (preg_match('/^[A-Za-z_ ][A-Za-z0-9_ ]{2,40}$/', $group_name)) {
 			return TRUE;
 		} else {
 			$this->form_validation->set_message('groupname_check', 'The %s is invalid');

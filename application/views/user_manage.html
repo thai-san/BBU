@@ -2,12 +2,27 @@
 <div class="page-container">
     <div class="sidebar-container">
         <div class="sidebar" id="sidebar">
-            {include file='_sidebar.html' active="user"}
+            {include file='_sidebar.html' active="user_manage"}
         </div>
     </div>
     <div class="page-content" id="page-content">
         <h2 class="page-header"><i class="fa fa-user"></i> User</h2>
         <p><i class="fa fa-plus"></i> <a href="/dashboard/user/addnew">Create New User</a></p>
+        {if validation_errors()}
+            <div class="bs-callout bs-callout-danger">
+                <h4>Input Error</h4>
+                {validation_errors()}
+            </div>
+        {/if}
+        {if $ci->session->flashdata("message")}
+            <div class="bs-callout bs-callout-{$ci->session->flashdata('status')}">
+                <h4>{$ci->session->flashdata('title')}</h4>
+                {$ci->session->flashdata('message')}
+            </div>
+            <script>
+                $(function() { $(".bs-callout").slideDown(); })
+            </script>
+        {/if}
         <table class="table table-bordered">
             <tr>
                 <th>User Name</th>
@@ -34,11 +49,17 @@
                         </span>
                     </form>
                 </td>
-                <td>{$item.user_create_date}</td>
+                <td title="{$item.user_create_date}">{$item.user_create_date|date_format:'%Y-%m-%d'}</td>
                 <td>
-                    <a href="/user/edit/{$item.user_id}">reset password</a> |
-                    <a href="/user/delete/{$item.user_id}">delete</a> |
-                    <label><input type="checkbox">disable</label>
+                    {if $item.is_admin eq 1}
+                    <a href="/user/resetpwd/{$item.user_id}">Reset Password</a>
+                    {else}
+                    <a href="/user/resetpwd/{$item.user_id}">Reset Password</a> |
+                    <a href="/user/delete/{$item.user_id}" onclick="return confirm('Are you sure want to delete user {$item.user_name} ?')">Delete</a> |
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="{$item.user_id}"> Disable
+                    </label>
+                    {/if}
                 </td>
             </tr>
             {/foreach}

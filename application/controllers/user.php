@@ -11,51 +11,9 @@ class User extends CI_Controller {
 		// Prepare User ID
 		if ($this->session->userdata("user_id")) {
 			$this->user_id = $this->session->userdata("user_id");
-		}
-	}
-
-	public function login() {
-			
-		// Prepare Data before insert
-		$user_name = trim($this->input->post('staff_user_name'));
-		$password = md5(trim($this->input->post('staff_password')));
-		
-		// SetCookie if user remember account
-		if ($this->input->post('staff_remember') == "on") {
-			// set Cookie for 1 Month
-			$this->input->set_cookie('staff_user_name', $user_name, time() + (60*60*24*30)); 
+			$this->user = $this->User_Model->detail($this->user_id);
 		} else {
-			// Remove user Cookie
-			delete_cookie('staff_user_name'); 
-		}
-		
-		// Remove Student Cookie
-		delete_cookie('student_id'); 
-
-		// Process User Login
-		$result = $this->User_Model->login($user_name, $password);
-		
-		// Check User Account
-		if ($result && $result['result'] == 1 ) {
-
-			// Store user data in session
-			$this->session->set_userdata("user_id", $result['user_id']);
-			$this->session->set_userdata("user_name", $result['user_name']);
-
-			// return Ajax status SUCCESS
-			$status = array('status' => "OK", 'url' => "/dashboard");
-		} else {
-			// return Ajax status FAIL
-			$status = array('status' => "FAIL", 'url' => "/login");
-		}
-
-		// Check if Javascript enable
-		if ($this->input->post('ajax') && $this->input->post('ajax') == 1) {
-			// Return json message
-			echo json_encode($status);
-		} else {
-			// go to login without javascript
-			redirect($status['url']);
+			redirect("/"); exit();
 		}
 	}
 
@@ -69,15 +27,6 @@ class User extends CI_Controller {
 
 		$this->smarty->view('user_manage', $data);
 	}
-
-	public function logout(){
-
-		// Remove all session
-		$this->session->sess_destroy();
-		header("location:/");
-	}
-
-
 
 	public function addnew() {
 
@@ -120,57 +69,64 @@ class User extends CI_Controller {
 
 	public function delete() {
 		
-		// Detail current logon user
-		$user = $this->User_Model->detail($this->user_id);
-
 		// set default value user_id = 0
 		$user_id = $this->uri->segment(3, 0);
 
 		// Detail user want to delete
-		$del_user = $this->User_Model->detail($user_id);
+		$user = $this->User_Model->detail($user_id);
 		
-		// User Type admin can't delete
-		if ($del_user['is_admin'] == 1) {
-			
+		// check post
+		if ($user['total_post'] > 0) {
 			// send back message
 			$this->session->set_flashdata(
 				array(
 					"title" => "Remove user",
-					"message" => "admin user can't be delete",
+					"message" => "Can not delete user {$user['user_name']}. Because this user have have many post.",
 					"status" => "warning"
 				)
 			);
-
-			// go back to user page
-			redirect("/dashboard/user");
-			exit();
+			redirect("/dashboard"); exit();
 		}
-
+		
 		// Only Admin can delete other user;
-		if ($user['is_admin'] == 1) {
+		if ($this->user['is_admin'] == 1) {
 			
 			// process delete user then return affect row
-			$affected_rows = $this->User_Model->delete($user_id);
+			$affected_rows = $this->User_Model->delete($user['user_id']);
 			
+			if ($affected_rows > 0) {
+				// send back message
+				$this->session->set_flashdata(
+					array(
+						"title" => "Remove user",
+						"message" => "{$affected_rows} user has been deleted",
+						"status" => "success"
+					)
+				);
+			} else {
+				// send back message
+				$this->session->set_flashdata(
+					array(
+						"title" => "Remove user",
+						"message" => "can not delete user ",
+						"status" => "warning"
+					)
+				);
+			}
+
+		} else {
 			// send back message
 			$this->session->set_flashdata(
 				array(
 					"title" => "Remove user",
-					"message" => "{$affected_rows} user has been deleted",
-					"status" => "success"
+					"message" => "you don't have permission to delete this user",
+					"status" => "warning"
 				)
 			);
-
-			// go back to user page
-			redirect("/dashboard/user");
-			exit();
-
-		} else {
-
-			// go back to dashboard
-			redirect("/dashboard");
-			exit();
+			
 		}
+		// redirect user
+		redirect("/dashboard"); exit();
 	}
 
 	public function username_check($user_name) {
@@ -201,10 +157,56 @@ class User extends CI_Controller {
 	public function resetpwd() {
 		$user_id = $this->uri->segment(3, 0);
 		
+		// Input validation rule
+		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
+		$this->form_validation->set_rules('password', '<b>Password</b>', 'trim|required|matches[confirm_password]|min_length[6]|max_length[20]');
+		$this->form_validation->set_rules('confirm_password', '<b>Confirm password</b>', 'trim|required');
+
 		if ($user_id != 0) {
-			$this->load->view('user_password_reset', $data);
-		} else {
 			
+			$data['user'] = $this->User_Model->detail($user_id);
+
+			// process form validation
+			if ($this->form_validation->run()){
+				
+				// process change user password in database
+				$affect_row = $this->User_Model->update($user_id, array(
+					'password' => md5(trim($this->input->post('password')))
+				));
+
+				// check result
+				if ($affect_row > 0) {
+					// send back message
+					$this->session->set_flashdata(
+						array(
+							"title" => "Reset Password",
+							"message" => "Password has been reseted for user <b>{$data['user']['user_name']}</b>",
+							"status" => "success"
+						)
+					);
+				// can't reset password
+				} else {
+					// send back message
+					$this->session->set_flashdata(
+						array(
+							"title" => "Reset Password",
+							"message" => "Can not reset password for user <b>{$data['user']['user_name']}</b>",
+							"status" => "danger"
+						)
+					);
+				}
+
+				// redirect user
+				redirect("user/resetpwd/{$user_id}"); exit();
+			// form validate error
+			} else  {
+				//​ re-load form with alert error
+				$this->smarty->view('user_password_reset');
+			}
+
+			$this->smarty->view('user_password_reset', $data);
+		} else {
+			echo "page are you looking for is not found.";
 		}
 	}
 

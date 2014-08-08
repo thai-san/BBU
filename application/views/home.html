@@ -2,33 +2,6 @@
 
     <div id="banner">
         <div class="container">
-            <!-- <div id="ads" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#ads" data-slide-to="0" class="active"></li>
-                    <li data-target="#ads" data-slide-to="1"></li>
-                    <li data-target="#ads" data-slide-to="2"></li>
-                </ol>
-
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="/assets/img/slide/baner.jpg" alt="">
-                    </div>
-                    <div class="item">
-                        <img src="/assets/img/slide/banner_web_master.jpg" alt="">
-                    </div>
-                    <div class="item">
-                        <img src="/assets/img/slide/banerit.jpg" alt="">
-                    </div>
-                </div>
-
-
-                <a class="left carousel-control" href="#ads" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="right carousel-control" href="#ads" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
-            </div> -->
             <!-- image size 1140px x 430px -->
             <script>$(window).load(function() { $('.flexslider').flexslider({ animation: "fade", controlNav: false }); });</script>
 
@@ -52,90 +25,21 @@
     <div id="content">
         <div class="container">
             <div class="row">
+                {foreach from=$categories item=item}
                 <div class="col-md-6">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">MIS</div>
+                        <div class="panel-heading">{$item.category_name}</div>
                         <div class="panel-body">
                             <ul>
-                                <li><p><a href="/post/detail">News Title From MIS Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, magnam.</a> <span class="label label-danger">New</span></p></li>
-                                <li><p><a href="/post/detail">News Title From MIS Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, nobis!</a></p></li>
-                                <li><p><a href="/post/detail">News Title From MIS Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, excepturi.</a> <span class="label label-danger">New</span></p></li>
-                                <li><p><a href="/post/detail">News Title From MIS Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, repellendus?</a></p></li>
-                                <li><p><a href="/post/detail">News Title From MIS Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, sapiente!</a> <span class="label label-danger">New</span></p></li>
+                                {foreach from=$item.posts item=post}
+                                    <li><p><a href="/home/post/{$post.post_id}">{$post.post_title}</a><span class="post_date" title="{$post.post_date}"> - {$post.post_date|date_format:"%Y-%m-%d"} </span></p></li>
+                                {/foreach}
                             </ul>
                         </div>
-                        <div class="panel-footer"><a href="/post/lists">View All</a></div>
+                        <div class="panel-footer"><a href="/home/category/{$item.category_id}">View All</a></div>
                     </div>
                 </div>
-
-                <div class="col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Foundation</div>
-                        <div class="panel-body">
-                            <ul>
-                                <li><p><a href="/post/detail">News Title From Foundation Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae, corporis?</a></p></li>
-                                <li><p><a href="/post/detail">News Title From Foundation Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, eaque.</a></p></li>
-                                <li><p><a href="/post/detail">News Title From Foundation Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, explicabo?</a></p></li>
-                                <li><p><a href="/post/detail">News Title From Foundation Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, adipisci!</a></p></li>
-                                <li><p><a href="/post/detail">News Title From Foundation Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, id!</a></p></li>
-                            </ul>
-                        </div>
-                        <div class="panel-footer"><a href="/post/lists">View All</a></div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Accademic</div>
-                        <div class="panel-body">
-                            <ul>
-                                <li><p><a href="/post/detail">News From Accademic Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, nihil.</a></p></li>
-                                <li><p><a href="/post/detail">News From Accademic Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, sed!</a></p></li>
-                                <li><p><a href="/post/detail">News From Accademic Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam, aliquid!</a></p></li>
-                                <li><p><a href="/post/detail">News From Accademic Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, voluptas.</a></p></li>
-                                <li><p><a href="/post/detail">News From Accademic Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, odit.</a></p></li>
-                                <li><p><a href="/post/detail">News From Accademic Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, natus.</a></p></li>
-                            </ul>
-                        </div>
-                        <div class="panel-footer"><a href="/post/lists">View All</a></div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Job Announcement</div>
-                        <div class="panel-body">
-                            <ul>
-                                <li><p><a href="/post/detail">Nws form Job Announcement Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></p></li>
-                                <li><p><a href="/post/detail">Nws form Job Announcement Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></p></li>
-                                <li><p><a href="/post/detail">Nws form Job Announcement Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></p></li>
-                                <li><p><a href="/post/detail">Nws form Job Announcement Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></p></li>
-                                <li><p><a href="/post/detail">Nws form Job Announcement Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></p></li>
-                                <li><p><a href="/post/detail">Nws form Job Announcement Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a></p></li>
-                            </ul>
-                        </div>
-                        <div class="panel-footer"><a href="/post/lists">View All</a></div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Payment</div>
-                        <div class="panel-body">
-                            <ul>
-                                <li><p><a href="/post/detail">New form payment Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic.</a></p></li>
-                                <li><p><a href="/post/detail">New form payment Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe.</a></p></li>
-                                <li><p><a href="/post/detail">New form payment Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt!</a></p></li>
-                                <li><p><a href="/post/detail">New form payment Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea.</a></p></li>
-                                <li><p><a href="/post/detail">New form payment Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla!</a></p></li>
-                                <li><p><a href="/post/detail">New form payment Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima.</a></p></li>
-                                <li><p><a href="/post/detail">New form payment Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi.</a></p></li>
-                            </ul>
-                        </div>
-                        <div class="panel-footer"><a href="/post/lists">View All</a></div>
-                    </div>
-                </div>
-
+                {/foreach}
             </div>
         </div>
     </div>

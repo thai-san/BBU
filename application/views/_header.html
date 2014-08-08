@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/assets/css/alertify.default.css"  media="screen">
     <link rel="stylesheet" href="/assets/css/dashboard.css"  media="screen">
     <link rel="stylesheet" href="/assets/css/flexslider.css">
+    <link rel="stylesheet" href="/assets/css/datepicker.css">
     <link rel="stylesheet" href="/assets/css/common.css"  media="screen">
     <!--[if lt IE 9]>
       <script src="/assets/bootstrap/js/html5shiv.js"></script>
@@ -41,7 +42,7 @@
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                             <li><a href="/student/changepasword">Change Password</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="/user/logout">Logout</a></li>
+                                            <li><a href="/dashboard/logout">Logout</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -52,7 +53,7 @@
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                             <li><a href="/user/changepasword">Change Password</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="/user/logout">Logout</a></li>
+                                            <li><a href="/dashboard/logout">Logout</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -65,7 +66,7 @@
                         {if $ci->session->userdata("STUDENT_ID")}
                             Promotion: {$ci->session->userdata("PROMOTION_NO")}, Stage: {$ci->session->userdata("STAGE_NO")}, Term: {$ci->session->userdata("TERM_NO")}, Group: {$ci->session->userdata("GROUP_NAME")}
                         {else if $ci->session->userdata("user_id")}
-                            Welcome back {$ci->session->userdata("user_name")}
+                            Group: <b>{$ci->session->userdata("group_name")}</b>
                         {/if}                       
                         </div>
                     </div>
@@ -75,8 +76,9 @@
             <div class="container">
                 <ul class="nav nav-pills">
                     <li><a href="/" {if $page eq "home"}class="active"{/if}>Home</a></li>
-                    <li><a href="#">MIS</a></li>
-                    <li><a href="#" {if $page eq "adcademic"}class="active"{/if}>Adcademic</a></li>
+                    {foreach from=$categories item=item}
+                    <li><a href="/home/category/{$item.category_id}">{$item.category_name}</a></li>
+                    {/foreach}
                     {if $ci->session->userdata("STUDENT_ID")}
                     <li><a href="/student/score" {if $page eq "score"}class="active"{/if}>Score</a></li>
                     <li><a href="/student/info" {if $page eq "info"}class="active"{/if}>Infomation</a></li>

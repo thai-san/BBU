@@ -45,7 +45,9 @@ $route['404_override'] = '';
 $route['dashboard/user'] = "user";
 $route['dashboard/group'] = "group";
 $route['dashboard/post'] = "post";
-$route['dashboard/editpost/(:num)'] = "post/editpost/$1";
+$route['dashboard/category'] = "category";
+$route['dashboard/editpost/(:num)'] = "post/update/$1";
+$route['dashboard/deletepost/(:num)'] = "post/deletepost/$1";
 $route['dashboard/([a-z]+)/([a-z]+)'] = "$1/$2";
 
 /* End of file routes.php */

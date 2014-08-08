@@ -2,7 +2,7 @@
 <div class="page-container">
     <div class="sidebar-container">
         <div class="sidebar" id="sidebar">
-            {include file='_sidebar.html' active="group"}
+            {include file='_sidebar.html' active="group_manage"}
         </div>
     </div>
     <div class="page-content" id="page-content">
@@ -40,7 +40,7 @@
                                 <td>{$item.group_id}</td>
                                 <td>{$item.group_name}</td>
                                 <td>{$item.total_user}</td>
-                                <td>{$item.group_create_date}</td>
+                                <td title="{$item.group_create_date}">{$item.group_create_date|date_format:'%Y-%m-%d'}</td>
                                 <td>
                                     <a href="/group/edit/{$item.group_id}">Edit</a> |
                                     <a href="/group/delete/{$item.group_id}" onclick="return confirm('Are you sure want to delete group {$item.group_name} ?')">Delete</a>
