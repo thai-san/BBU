@@ -146,7 +146,7 @@ class Category extends CI_Controller {
 					$this->session->set_flashdata(
 						array(
 							"title" => "Delete Category",
-							"message" => "{$affect_row} post updated",
+							"message" => "{$affect_row} deleted",
 							"status" => "success"
 						)
 					);
