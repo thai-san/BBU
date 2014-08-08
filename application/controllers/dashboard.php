@@ -9,10 +9,12 @@ class Dashboard extends CI_Controller {
 			header("location:/");
 			exit();
 		}
+		$this->load->model('Category_Model');
 	}
 
 	public function index() {
-		$this->smarty->view('dashboard');
+		$data['menu'] = $this->Category_Model->get_list();
+		$this->smarty->view('dashboard', $data);
 	}
 
 	public function logout(){

@@ -9,14 +9,17 @@ class Group extends CI_Controller {
 			exit();
 		}
 		$this->load->model('Group_Model');
+		$this->load->model('Category_Model');
 	}
 
  	public function index() {
+		$data['menu'] = $this->Category_Model->get_list();
  		$data['groups'] = $this->Group_Model->manage();
  		$this->smarty->view('group_manage', $data);
  	}
  	
  	public function addnew() {
+		$data['menu'] = $this->Category_Model->get_list();
  		// setting up validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
 		$this->form_validation->set_rules('group_name', '<b>Group name</b>', 'trim|required|is_unique[groups.group_name]|min_length[3]|max_length[40]|callback_groupname_check');
@@ -59,7 +62,7 @@ class Group extends CI_Controller {
 
 		// form validate error
 		} else {
- 			$this->smarty->view('group_add');
+ 			$this->smarty->view('group_add', $data);
 		}
  	}
 
@@ -73,6 +76,7 @@ class Group extends CI_Controller {
 	}
 
 	public function edit() {
+		$data['menu'] = $this->Category_Model->get_list();
 		$group_id = $this->uri->segment(3, 0);
 
 		if ($group_id != 0 ) {

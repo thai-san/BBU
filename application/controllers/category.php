@@ -4,20 +4,22 @@
 class Category extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('Category_Model');
 		if ($this->session->userdata("user_id")) {
 			$this->user_id = $this->session->userdata("user_id");
-			$this->load->model('Category_Model');
 		} else {
 			header("location:/"); exit();
 		}
 	}
 
 	public function index() {
+		$data['menu'] = $this->Category_Model->get_list();
 		$data['categories'] = $this->Category_Model->manage();
 		$this->smarty->view('category_manage', $data);
 	}
 
 	public function addnew() {
+		$data['menu'] = $this->Category_Model->get_list();
 		// setting up validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
 		$this->form_validation->set_rules('category_name', '<b>Category Name</b>', 'trim|required|is_unique[categories.category_name]|min_length[3]|max_length[40]|callback_category_name_check');
@@ -56,11 +58,12 @@ class Category extends CI_Controller {
 			redirect("/category/addnew"); exit();
 		// form validate error
 		} else {
-			$this->smarty->view('category_add');
+			$this->smarty->view('category_add', $data);
 		}
 	}
 
 	public function edit() {
+		$data['menu'] = $this->Category_Model->get_list();
 		
 		$category_id = $this->uri->segment(3, 0);
 

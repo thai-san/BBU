@@ -1,4 +1,4 @@
-{include file='_header.html' title=''}
+{include file='_header.html' title="`$category.category_name`"}
 
 <div id="content">
     <div class="container">
@@ -10,7 +10,7 @@
                     <div class="panel-body">
                         <ul>
                             {foreach from=$posts item=item}
-                            <li><p><a href="/home/post/{$item.post_id}">{$item.post_title}.</a></p></li>
+                            <li><p><a href="/home/post/{$item.post_id}">{$item.post_title}.</a><span class="post_date" title="{$post.post_date}"> - {$item.post_date|date_format:"%Y-%m-%d"} </span></p></li>
                             {/foreach}
                         </ul>
                     </div>

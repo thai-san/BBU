@@ -7,6 +7,7 @@ class User extends CI_Controller {
 
 		// Load User Model First
 		$this->load->model('User_Model');
+		$this->load->model('Category_Model');
 
 		// Prepare User ID
 		if ($this->session->userdata("user_id")) {
@@ -18,7 +19,7 @@ class User extends CI_Controller {
 	}
 
 	public function index() {
-		
+		$data['menu'] = $this->Category_Model->get_list();
 		// Load All user
 		$data['users'] = $this->User_Model->manage();
 		
@@ -29,7 +30,7 @@ class User extends CI_Controller {
 	}
 
 	public function addnew() {
-
+		$data['menu'] = $this->Category_Model->get_list();
 		// Input validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
 		$this->form_validation->set_rules('user_name', '<b>User name</b>', 'trim|required|is_unique[users.user_name]|min_length[3]|max_length[20]|callback_username_check');
@@ -155,6 +156,7 @@ class User extends CI_Controller {
 	}
 
 	public function resetpwd() {
+		$data['menu'] = $this->Category_Model->get_list();
 		$user_id = $this->uri->segment(3, 0);
 		
 		// Input validation rule

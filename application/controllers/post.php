@@ -11,6 +11,8 @@ class Post extends MY_Controller {
 	}
 
 	public function index() {
+		$data['menu'] = $this->Category_Model->get_list();
+
 		// initailize data
 		$data['posts'] = array();
 		// if user admin can see all post
@@ -64,6 +66,8 @@ class Post extends MY_Controller {
 	}
 
 	public function post_type_image(){
+		$data['menu'] = $this->Category_Model->get_list();
+
 		// setup rule for differance post_type
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
 		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
@@ -119,6 +123,8 @@ class Post extends MY_Controller {
 	}
 
 	public function post_type_pdf() {
+		$data['menu'] = $this->Category_Model->get_list();
+
 		// setting up form validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
 		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
@@ -174,6 +180,7 @@ class Post extends MY_Controller {
 	}
 
 	public function post_type_text() {
+		$data['menu'] = $this->Category_Model->get_list();
 		
 		// setup rule for differance post_type
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
@@ -210,6 +217,7 @@ class Post extends MY_Controller {
 	}
 
 	private function update_post_type_image() {
+		$data['menu'] = $this->Category_Model->get_list();
 		
 		$post_id = $this->uri->segment(3, 0);
 		// setting form validation rule
@@ -269,6 +277,7 @@ class Post extends MY_Controller {
 	}
 	
 	public function update_post_type_pdf() {
+		$data['menu'] = $this->Category_Model->get_list();
 		
 		$post_id = $this->uri->segment(3, 0);
 		// setting form validation rule
@@ -323,6 +332,7 @@ class Post extends MY_Controller {
 	}
 	
 	public function update_post_type_text() {
+		$data['menu'] = $this->Category_Model->get_list();
 		
 		// setup rule for differance post_type
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
@@ -355,7 +365,7 @@ class Post extends MY_Controller {
 			}
 		// form validation error
 		} else {
-			$this->smarty->view('post_add'); 
+			$this->smarty->view('post_edit', $data); 
 		}
 	}
 

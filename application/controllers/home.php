@@ -30,7 +30,7 @@ class Home extends CI_Controller {
 		$data['menu'] = $this->Category_Model->get_list();
 		$data['category'] = $this->Category_Model->detail($category_id);
 		$data['posts'] = $this->Category_Model->get_all_post($category_id);
-		$this->smarty->view("post_list", $data);
+		$this->smarty->view("category_post", $data);
 	}
 
 	public function post($post_id) {
