@@ -37,7 +37,7 @@ class Category extends CI_Controller {
 				$this->session->set_flashdata(
 					array(
 						"title" => "Create Category",
-						"message" => "Category <b>{$data['category_name']}<b> has been created",
+						"message" => "Category <b>{$data['category_name']}</b> has been created",
 						"status" => "success"
 					)
 				);
