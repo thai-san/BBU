@@ -105,4 +105,4 @@ CREATE TABLE attachments (
 -- Insert Test Data
 INSERT INTO groups (group_name) VALUES ('MIS');
 INSERT INTO users (user_name, password, is_admin, group_id) VALUES ('admin', '202cb962ac59075b964b07152d234b70', 1, 1);
-INSERT INTO categories (category_name, category_owner) VALUES ('Uncategory', 1);
+INSERT INTO categories (category_name) VALUES ('Uncategory');
