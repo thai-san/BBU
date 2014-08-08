@@ -284,3 +284,7 @@ html, body {
 	max-width: 1170px;
 	margin: 0 auto;
 }
+
+table tr.danger td {
+	background: #f2dede !important;
+}
