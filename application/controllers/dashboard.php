@@ -16,12 +16,6 @@ class Dashboard extends CI_Controller {
 		$data['menu'] = $this->Category_Model->get_list();
 		$this->smarty->view('dashboard', $data);
 	}
-
-	public function logout(){
-		// Remove all session
-		$this->session->sess_destroy();
-		header("location:/");
-	}
 }
 
 /* End of file dashboard.php */

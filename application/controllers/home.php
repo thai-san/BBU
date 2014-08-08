@@ -146,6 +146,12 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function logout(){
+		// Remove all session
+		$this->session->sess_destroy();
+		header("location:/");
+	}
+
 }
 
 /* End of file home.php */
