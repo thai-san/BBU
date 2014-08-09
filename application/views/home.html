@@ -27,24 +27,7 @@
                             <ul>
                                 {foreach from=$item.posts item=post}
                                     <li>
-                                        <div class="media">
-                                            <a class="pull-left" href="/home/post/{$post.post_id}">
-                                                {if $post.post_type eq "IMAGE"}
-                                                <img class="media-object" src="{$smarty.const.VTHUMBNAIL}{$post.file_name}" width="35" height="35">
-                                                {else if $post.post_type eq "PDF"}
-                                                <i class="media-object fa fa-file-pdf-o fa-3x"></i>
-                                                {else if $post.post_type eq "TEXT"}
-                                                <i class="media-object fa fa-file-text-o fa-3x"></i>
-                                                {/if}
-                                            </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading post_title"><a href="/home/post/{$post.post_id}">{$post.post_title}</a></h4>
-                                                <p class="post_info">
-                                                    <span class="post_date">From {$post.group_name} on</span>
-                                                    <span title="{$post.post_date}" class="post_date">{$post.post_date|date_format:"%Y-%m-%d"}</span>
-                                                </p>
-                                            </div>
-                                        </div>
+                                        {include file="_post_item_template.html" id="`$post.post_id`" title="`$post.post_title`" type="`$post.post_type`" from="`$post.group_name`" date="`$post.post_date`"}
                                     </li>
                                 {/foreach}
                             </ul>

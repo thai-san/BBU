@@ -4,6 +4,7 @@
         <div class="row">
             
             <div class="col-md-8">
+                {if $post.post_type eq "IMAGE"}
                 
                 <div class="panel panel-primary">
                     <div class="panel-heading">{$post.post_title} </div>
@@ -14,14 +15,49 @@
                     </div>
                 </div>
 
+                {else if $post.post_type eq "PDF"}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{$post.post_title} </div>
+                    <div class="panel-body">
+                        {foreach from=$attachments item=item}
+                            <div class="media">
+                                <a class="pull-left" target="_blank" href="{$smarty.const.VUPLOAD_PATH}{$item.file_name}">
+                                    <i class="media-object fa fa-file-pdf-o fa-2x"></i>
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading post_title">{$item.orig_name}</h4>
+                                    <p class="post_info">
+                                        <a href="{$smarty.const.VUPLOAD_PATH}{$item.file_name}" target="_blank">Click View here</a> | <a href="{$smarty.const.VUPLOAD_PATH}{$item.file_name}" download>Download</a>
+                                        <span class="post_date"> from {$post.user_name}</span>
+                                        <span title="{$item.file_upload_date}" class="post_date">on {$item.file_upload_date|date_format:'%Y-%m-%d'}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        {/foreach}
+                    </div>
+                </div>
+
+                {else if $post.post_type eq "TEXT"}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{$post.post_title} </div>
+                    <div class="panel-body">
+                        {$post.post_description}
+                    </div>
+                </div>
+
+                {/if}
+
             </div>
+
             <div class="col-md-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Relate Post</div>
                         <div class="panel-body">
                             <ul>
                             {foreach from=$relate_posts item=item}
-                                <li><a href="/home/post/{$item.post_id}">{$item.post_title}</a> <span class="post_date" title="{$post.post_date}"> - {$post.post_date|date_format:"%Y-%m-%d"} </span></li>
+                                <li>
+                                    {include file="_post_item_template.html" id="`$item.post_id`" title="`$item.post_title`" type="`$item.post_type`" from="`$item.group_name`" date="`$item.post_date`"}
+                                </li>
                             {/foreach}
                             </ul>
                         </div>

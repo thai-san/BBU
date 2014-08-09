@@ -34,14 +34,14 @@ class Home extends CI_Controller {
 		$this->smarty->view("category_post", $data);
 	}
 
-	public function test() {
-		echo "test";
-	}
-
 	public function post() {
 		
 		$post_id = $this->uri->segment(3, 0);
-
+		
+		if (!$this->Post_Model->row_exists($post_id)) {
+			show_404("Post");
+			exit();
+		} 
 		$data['menu'] = $this->Category_Model->get_list();
 		// prepare date before insert to database
 		$visitor = array(
@@ -50,10 +50,6 @@ class Home extends CI_Controller {
 			"post_id" => $post_id
 		);
 		
-		if (!$this->Post_Model->row_exists($post_id)) {
-			show_404("Post");
-			exit();
-		} 
 
 		// Insert visitor information
 		$this->Visitor_Model->insert($visitor);

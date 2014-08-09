@@ -10,7 +10,9 @@
                     <div class="panel-body">
                         <ul>
                             {foreach from=$posts item=item}
-                            <li><p><a href="/home/post/{$item.post_id}">{$item.post_title}.</a><span class="post_date" title="{$post.post_date}"> - {$item.post_date|date_format:"%Y-%m-%d"} </span></p></li>
+                            <li>
+                                {include file="_post_item_template.html" id="`$item.post_id`" title="`$item.post_title`" type="`$item.post_type`" from="`$item.group_name`" date="`$item.post_date`"}
+                            </li>
                             {/foreach}
                         </ul>
                     </div>

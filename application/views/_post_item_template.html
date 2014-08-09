@@ -1,0 +1,18 @@
+<div class="media">
+    <a class="pull-left" href="/home/post/{$id}">
+        {if $type eq "IMAGE"}
+        <i class="media-object fa fa-file-image-o fa-2x"></i>
+        {else if $type eq "PDF"}
+        <i class="media-object fa fa-file-pdf-o fa-2x"></i>
+        {else if $type eq "TEXT"}
+        <i class="media-object fa fa-file-text-o fa-2x"></i>
+        {/if}
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading post_title"><a href="/home/post/{$id}">{$title}</a></h4>
+        <p class="post_info">
+            <span class="post_date">from <b>{$from}</b></span>
+            <span title="{$date}" class="post_date">on {$date|date_format:'%Y-%m-%d'}</span>
+        </p>
+    </div>
+</div>

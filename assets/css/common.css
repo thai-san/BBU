@@ -300,3 +300,8 @@ table tr.danger td {
 .nav.nav-tabs li{
 	font-weight: bold;
 }
+
+.media-heading.post_title {
+	font-size: 1em;
+	font-weight: bold;
+}
