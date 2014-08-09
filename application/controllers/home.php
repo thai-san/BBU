@@ -50,7 +50,6 @@ class Home extends CI_Controller {
 			"post_id" => $post_id
 		);
 		
-
 		// Insert visitor information
 		$this->Visitor_Model->insert($visitor);
 		// detial current post

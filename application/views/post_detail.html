@@ -28,7 +28,7 @@
                                     <h4 class="media-heading post_title">{$item.orig_name}</h4>
                                     <p class="post_info">
                                         <a href="{$smarty.const.VUPLOAD_PATH}{$item.file_name}" target="_blank">Click View here</a> | <a href="{$smarty.const.VUPLOAD_PATH}{$item.file_name}" download>Download</a>
-                                        <span class="post_date"> from {$post.user_name}</span>
+                                        <span class="post_date">-  from <b>{$post.group_name}</b></span>
                                         <span title="{$item.file_upload_date}" class="post_date">on {$item.file_upload_date|date_format:'%Y-%m-%d'}</span>
                                     </p>
                                 </div>
