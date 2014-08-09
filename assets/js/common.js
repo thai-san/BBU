@@ -1,3 +1,14 @@
+tinymce.init({
+    selector: "#input_type_text",
+    height: 300,
+    plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime table contextmenu paste"
+    ],
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+});
+
 function handleLayout () {
     var header = $("#header").outerHeight();
     var win = $(window).innerHeight();

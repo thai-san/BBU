@@ -10,8 +10,7 @@
 <ul class="nav nav-sidebar">
     <li {if $active eq "user_manage"}class="active"{/if}><a href="/dashboard/user"><i class="fa fa-user"></i> User</a></li>
 </ul>
-{/if}
-{if $ci->session->userdata("is_admin") eq 1}
+
 <ul class="nav nav-sidebar">
     <li {if $active eq "group_manage"}class="active"{/if}><a href="/dashboard/group"><i class="fa fa-users"></i> Group</a></li>
 </ul>
