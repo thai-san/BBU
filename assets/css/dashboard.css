@@ -125,6 +125,9 @@
     font-weight: bold;
 }
 
+.no-sidebar .page-content{
+    margin-left: 0;
+}
 
 .change_group_control {
     visibility: hidden;

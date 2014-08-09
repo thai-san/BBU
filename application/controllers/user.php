@@ -159,7 +159,7 @@ class User extends MY_Controller {
 		$data['user'] = $this->user;
 		// setting form validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
-		$this->form_validation->set_rules('old_password', '<b>Confirm password</b>', 'trim|required');
+		$this->form_validation->set_rules('old_password', '<b>Password</b>', 'trim|required');
 		$this->form_validation->set_rules('password', '<b>New Password</b>', 'trim|required|matches[confirm_password]|min_length[6]|max_length[20]');
 		$this->form_validation->set_rules('confirm_password', '<b>Confirm New password</b>', 'trim|required');
 		// Process form validation
