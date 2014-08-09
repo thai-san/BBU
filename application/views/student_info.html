@@ -1,12 +1,20 @@
 {include file='_header.html' page='info'}
 <div class="container">
     <div class="row">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#personal_information" role="tab" data-toggle="tab">Personal Information</a></li>
+        <li><a href="#academic_information" role="tab" data-toggle="tab">Academic Information & Payment</a></li>
+        <li><a href="#contact" role="tab" data-toggle="tab">Personal & Relative Contact</a></li>
+    </ul>
 
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Personal Information</div>
-                <div class="panel-body">
-                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="personal_information">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Personal Information</h3>
+                    <table class="table table-hover table-bordered table-striped">
                         <tr>
                             <th>Name</th>
                             <td>{$student.STUDENT_NAME}</td>
@@ -61,14 +69,34 @@
                         </tr>
                     </table>
                 </div>
+                <div class="col-md-6">
+                    <h3>Parent Informatino</h3>
+                    <table class="table table-hover table-bordered table-striped">
+                        <tr>
+                            <th>Mother Name</th>
+                            <td class="limon">{$student.MOTHER_NAME_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Mother Job</th>
+                            <td class="limon">{$student.MOTHER_OCCUPATION_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Father Name</th>
+                            <td class="limon">{$student.FATHER_NAME_IN_KHMER}</td>
+                        </tr>
+                        <tr>
+                            <th>Father Job</th>
+                            <td class="limon">{$student.FATHER_OCCUPATION_IN_KHMER}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Academic Information</div>
-                <div class="panel-body">
-                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+        <div class="tab-pane" id="academic_information">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Academic Information</h3>
+                    <table class="table table-hover table-bordered table-striped">
                         <tr>
                             <th>Degree Name</th>
                             <td>{$group.DEGREE}</td>
@@ -115,85 +143,9 @@
                         </td>
                     </table>
                 </div>
-            </div>
-        </div>
-
-        <div class="clearfix"></div>
-
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Personal & Relative Contact</div>
-                <div class="panel-body">
-                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
-                        <tr>
-                            <th>Phone Number</th>
-                            <td>{$student.PHONE}</td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td>{$student.EMAIL}</td>
-                        </tr>
-                        <tr>
-                            <th>Address</th>
-                            <td>{$student.ADDRESS}</td>
-                        </tr>
-                        <tr>
-                            <th>Address In Khmer</th>
-                            <td class="limon">{$student.ADDRESS_IN_KHMER}</td>
-                        </tr>
-                        <tr>
-                            <th>Relative Name</th>
-                            <td class="limon">{$student.CONTACT_PERSON_NAME}</td>
-                        </tr>
-                        <tr>
-                            <th>Relative Job</th>
-                            <td class="limon">{$student.CONTACT_PERSON_JOB}</td>
-                        </tr>
-                        <tr>
-                            <th>Relative Phone</th>
-                            <td class="limon">{$item.CONTACT_PERSON_PHONE}</td>
-                        </tr>
-                        <tr>
-                            <th>Relative Address</th>
-                            <td class="limon">{$student.CONTACT_ADDRESS}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Parents Informaiton</div>
-                <div class="panel-body">
-                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
-                        <tr>
-                            <th>Mother Name</th>
-                            <td class="limon">{$student.MOTHER_NAME_IN_KHMER}</td>
-                        </tr>
-                        <tr>
-                            <th>Mother Job</th>
-                            <td class="limon">{$student.MOTHER_OCCUPATION_IN_KHMER}</td>
-                        </tr>
-                        <tr>
-                            <th>Father Name</th>
-                            <td class="limon">{$student.FATHER_NAME_IN_KHMER}</td>
-                        </tr>
-                        <tr>
-                            <th>Father Job</th>
-                            <td class="limon">{$student.FATHER_OCCUPATION_IN_KHMER}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <div class="clearfix"></div>
-
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Payment  </div>
-                <div class="panel-body">
-                    <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                <div class="col-md-6">
+                    <h3>Payment History</h3>
+                    <table class="table table-hover table-bordered table-striped">
                         <tr>
                             <th>Term</th>
                             <th>Paid</th>
@@ -210,6 +162,45 @@
                 </div>
             </div>
         </div>
+        <div class="tab-pane" id="contact">
+            <h3>Contact Information</h3>
+            <table class="table table-hover table-bordered table-striped">
+                <tr>
+                    <th>Phone Number</th>
+                    <td>{$student.PHONE}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{$student.EMAIL}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>{$student.ADDRESS}</td>
+                </tr>
+                <tr>
+                    <th>Address In Khmer</th>
+                    <td class="limon">{$student.ADDRESS_IN_KHMER}</td>
+                </tr>
+                <tr>
+                    <th>Relative Name</th>
+                    <td class="limon">{$student.CONTACT_PERSON_NAME}</td>
+                </tr>
+                <tr>
+                    <th>Relative Job</th>
+                    <td class="limon">{$student.CONTACT_PERSON_JOB}</td>
+                </tr>
+                <tr>
+                    <th>Relative Phone</th>
+                    <td class="limon">{$item.CONTACT_PERSON_PHONE}</td>
+                </tr>
+                <tr>
+                    <th>Relative Address</th>
+                    <td class="limon">{$student.CONTACT_ADDRESS}</td>
+                </tr>
+            </table>
+        </div>
     </div>
+    <br>
 </div>
+
 {include file='_footer.html'}
