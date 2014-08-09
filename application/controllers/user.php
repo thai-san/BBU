@@ -111,7 +111,7 @@ class User extends MY_Controller {
 		if(!$this->is_admin()) {
 			$this->send_message("User Access", "Access denied.","warning");
 			$this->redirect("/dashboard");
-		} 
+		}
 		// get user_id from url
 		$user_id = $this->uri->segment(3,0);
 		// check user id
@@ -126,7 +126,10 @@ class User extends MY_Controller {
 		$affect_row = $this->User_Model->update($user_id, $data);
 		// check result
 		if ($affect_row > 0) {
+			$user = $this->User_Model->detail($user_id);
 			// send back message
+			$this->session->set_userdata("group_id", $user["group_id"]);
+			$this->session->set_userdata("group_name", $user["group_name"]);
 			$this->send_message("Chnage User Group", "Group changed for user <b>{$user['user_name']}</b>", "success");
 		} else {
 			// send back message

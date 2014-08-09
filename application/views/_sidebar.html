@@ -4,7 +4,7 @@
 
 <ul class="nav nav-sidebar">
     <li {if $active eq "post_manage"}class="active"{/if}><a href="/dashboard/post"><i class="fa fa-inbox"></i> Post</a></li>
-    <li {if $active eq "category_manage"}class="active"{/if}><a href="/dashboard/category"><i class="fa fa-folder-open-o"></i> Category</a></li>
+    <li {if $active eq "category_manage"}class="active"{/if}><a href="/dashboard/category"><i class="fa fa-folder-open"></i> Category</a></li>
 </ul>
 {if $ci->session->userdata("is_admin") eq 1}
 <ul class="nav nav-sidebar">

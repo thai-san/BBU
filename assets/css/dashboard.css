@@ -166,3 +166,7 @@ form .btn {
 .primary {
     width: 50%;
 }
+
+.page-header .btn-sm.pull-right {
+    margin-top: 5px;
+}
