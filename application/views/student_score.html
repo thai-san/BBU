@@ -1,25 +1,36 @@
 {include file='_header.html' title='Student' page='score'}
+
     <div id="content">
         <div class="container">
+        
         {if $ci->session->userdata("STUDENT_ID")}
             <div class="col-md-12">
                 <div class="alert alert-info"><i class="fa fa-info-circle"></i> <span class="limon">kñúgkrNIFøak;muxviC¢axageRkam ³ sUmnisSitmkTak;Tgkarriyal½yfñak;qñaMsikSamUldæan b¤karriyal½ysikSaedImb,Idak;Bakü Rblgsg b¤eronsg .<i>elxTUrs½BÞkariyal½y 098 550 005</i></span></div>
             </div>
         {/if}
+
+            <div class="col-md-12">
+                <!-- Score tabs -->
+                <ul class="nav nav-tabs" role="tablist" id="score_tab">
+{$i=0}
+{foreach from=$score item=item}
+{if $i neq $item.TERM_NO}
+                    <li><a href="#term_{$item.TERM_NO}" role="tab" data-toggle="tab">Term {$item.TERM_NO}</a></li>
+{/if}
+{$i = $item.TERM_NO}
+{/foreach}
+                </ul>
+                <!-- Scre Tab panes -->
+                <div class="tab-content">
 {$term=0}
 {foreach from=$score item=item}
-    {if $term != $item.TERM_NO}
-        {if $term!=0}
+    {if $term neq $item.TERM_NO}
+        {if $term neq 0}
                         </table>
                     </div>
-                </div>
-            </div>
         {/if}
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Term : {$item.TERM_NO}</div>
-                    <div class="panel-body">
-                        <table class="table table-hover-bbu table-bordered-bbu table-striped-bbu">
+                        <div class="tab-pane" id="term_{$item.TERM_NO}">
+                        <table class="table table-hover table-bordered table-striped">
                             <tr>
                                 <th>Course</th>
                                 <th class="midterm">Midterm</th>
@@ -34,13 +45,14 @@
                                 <td class="final">{$item.FINAL_SCORE}</td>
                                 <td class="total">{$item.TOTAL_SCORE}</td>
                             </tr>
-    {foreachelse}
-                <div class="alert alert-warning"><i class="fa fa-exclamation-triangle"> </i> Sorry, You dosen't have score result yet. any problem please contect univercity for support</div>
     {/foreach}
                         </table>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
-    </div>
+    <script> $(function () { $('#score_tab a:first').tab('show'); }); </script>
+
 {include file='_footer.html'}
+

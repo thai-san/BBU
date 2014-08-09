@@ -296,3 +296,7 @@ table tr.danger td {
 .post_title {
 	text-transform: capitalize;
 }
+
+.nav.nav-tabs li{
+	font-weight: bold;
+}
