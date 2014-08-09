@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="page-content" id="page-content">
-        <h2 class="page-header middle">Edit Group</h2>
+        <h2 class="page-header middle"><i class="fa fa-users"></i> Edit Group</h2>
         {include file='_message.html'}
         <div class="col-md-10">
             <form class="form-horizontal" action="/group/edit/{$group.group_id}" method="post" role="form" autocomplete="off">
@@ -16,7 +16,6 @@
                         <input type="text" class="form-control" id="group_name" name="group_name" value="{set_value("group_name", $group.group_name)}" placeholder="Group Name" required autofocus>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                         <button type="submit" class="btn btn-primary">Change Group Name</button>
