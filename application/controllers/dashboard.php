@@ -13,7 +13,7 @@ class Dashboard extends MY_Controller {
 		if ($this->is_admin()) {
 			$data['post_today'] = $this->Post_Model->get_all_post_today();
 		} else {
-			$data['post_today'] = $this->Post_Model->get_post_today($this->user_id['group_id']);
+			$data['post_today'] = $this->Post_Model->get_post_today($this->user['group_id']);
 		}
 		$this->smarty->view('dashboard', $data);
 	}
