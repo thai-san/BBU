@@ -8,7 +8,15 @@ SELECT
 	p.*,
 	u.group_id,
 	g.group_name,
-	c.category_name
+	c.category_name,
+	(
+		SELECT
+			COUNT(*) as total_visitor
+		FROM
+			visitors v
+		WHERE
+			v.post_id = p.post_id
+	) AS total_visitor
 FROM
 	posts p
 	LEFT JOIN users u ON (u.user_id = p.OWNER)
@@ -124,7 +132,15 @@ SELECT
 	u.user_name,
 	u.is_enable AS is_user_enable,
 	u.user_create_date,
-	g.group_name
+	g.group_name,
+	(
+		SELECT
+			COUNT(*) as total_visitor
+		FROM
+			visitors v
+		WHERE
+			v.post_id = p.post_id
+	) AS total_visitor
 FROM
 	posts p
 	INNER JOIN users u ON (u.user_id = p. OWNER)
@@ -141,6 +157,75 @@ SQL;
 
 		return $res->result_array();
 	}
+
+	public function get_all_post_today() {
+		$sql = <<<SQL
+SELECT
+	p.*,
+	u.group_id,
+	u.user_name,
+	g.group_name,
+	c.category_name,
+	(
+		SELECT
+			COUNT(*) as total_visitor
+		FROM
+			visitors v
+		WHERE
+			v.post_id = p.post_id
+	) AS total_visitor
+FROM
+	posts p
+	LEFT JOIN users u ON (u.user_id = p.OWNER)
+	LEFT JOIN groups g ON (g.group_id = u.group_id)
+	LEFT JOIN categories c ON (c.category_id = p.category_id)
+WHERE
+	DATE(p.post_date) = CURDATE()
+SQL;
+		$res = $this->db->query(
+			$sql,
+			array(
+				
+			)
+		);
+
+		return $res->result_array();
+	}
+
+	public function get_post_today($group_id) {
+		$sql = <<<SQL
+SELECT
+	p.*,
+	u.group_id,
+	u.user_name,
+	g.group_name,
+	c.category_name,
+	(
+		SELECT
+			COUNT(*) as total_visitor
+		FROM
+			visitors v
+		WHERE
+			v.post_id = p.post_id
+	) AS total_visitor
+FROM
+	posts p
+	LEFT JOIN users u ON (u.user_id = p.OWNER)
+	LEFT JOIN groups g ON (g.group_id = u.group_id)
+	LEFT JOIN categories c ON (c.category_id = p.category_id)
+WHERE
+	DATE(p.post_date) = CURDATE()  && g.group_id = ?
+SQL;
+		$res = $this->db->query(
+			$sql,
+			array(
+				$group_id
+			)
+		);
+
+		return $res->result_array();
+	}
+
 }
 
 /* End of file post_model.php */

@@ -1,6 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
 class Visitor_Model extends MY_Model {
+
+	public function visit_today() {
+		$sql = <<<SQL
+SELECT
+	v.*
+FROM
+	visitors v
+WHERE
+	DATE(v.visite_date) = CURDATE()
+SQL;
+		$res = $this->db->query($sql,
+			array(
+
+			)
+		);
+		
+		return $res->result_array();
+	}
 	
 	public function insert($data) {
 
