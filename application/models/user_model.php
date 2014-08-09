@@ -12,7 +12,7 @@ FROM
 	users u
 	LEFT JOIN groups g ON (g.group_id = u.group_id)
 WHERE
-	u.user_name = ? && u.password = ?
+	u.user_name = ? && u.password = ? && u.is_enable = 1
 SQL;
 		$res = $this->db->query(
 			$sql,
