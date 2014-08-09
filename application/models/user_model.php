@@ -57,7 +57,14 @@ SELECT
 	u.*,
 	g.group_id,
 	g.group_name,
-	COUNT(*) AS result
+	(
+		SELECT
+			COUNT(*) AS total_post
+		FROM
+			posts p
+		WHERE
+			p.owner = u.user_id
+	)AS total_post
 FROM
 	users u
 	INNER JOIN groups g on (g.group_id = u.group_id)

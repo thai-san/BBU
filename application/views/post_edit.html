@@ -15,23 +15,37 @@
                     <input type='text' class="form-control input-lg" name='post_title' value='{set_value("post_title", $post.post_title)}'  autofocus>
                 </div>
 
-                <div class="form-group" id="post_type_image">
-                    <label for="expire_date">Expire Date</label>
-                    <div class="input-group">
-                    <input type="text" class="form-control datepicker input-lg" name="expire_date" id="expire_date" value="{set_value("expire_date", $post.expire_date)}">
-                        <span class="input-group-addon"><i class="fa fa-calendar-o"></i>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="category_id">Category</label>
+                            <select name="category_id" id="category_id" class="form-control input-lg">
+                                {foreach from=$categories item=item}
+                                <option value="{$item.category_id}" {set_select("category_id", $item.category_id)}>{$item.category_name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="expire_date">Expire Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datepicker input-lg" name="expire_date" id="expire_date" value='{set_value("expire_date", $post.expire_date)}' required>
+                                <span class="input-group-addon"><i class="fa fa-calendar-o"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 {if $post.post_type eq "IMAGE"}
                 <div class="form-group">
                     <label for="input_type_image">Choose Image</label>
-                    <input id="input_type_image" class="form-control input-lg" name="input_type_image[]" type="file" multiple>
+                    <input id="input_type_image" class="form-control input-lg" name="input_type_image[]" type="file" accept="image/*" multiple>
                 </div>
                 {else if $post.post_type eq "PDF"}
                 <div class="form-group">
                     <label for="input_type_pdf">Choose PDF</label>
-                    <input id="input_type_pdf" class="form-control input-lg" name="input_type_pdf[]" type="file" multiple>
+                    <input id="input_type_pdf" class="form-control input-lg" name="input_type_pdf[]" type="file" accept="application/pdf" multiple>
                 </div>
                 {else if $post.post_type eq "TEXT"}
                 <div class="form-group">
@@ -41,7 +55,7 @@
                 {/if}
 
                 <div class="form-group">
-                    <input type='submit' class="btn btn-primary btn-lg" name='submit' value='Save'>
+                    <input type='submit' class="btn btn-primary" name='submit' value='Save'>
                 </div>
 
             </form>
@@ -50,7 +64,7 @@
         <div class="col-md-4">
             <h2>File in this post</h2>
             <div id="file_list">
-            {if $post.post_type neq "TEXT"}
+            {if $post.post_type eq "IMAGE" or $post.post_type eq "PDF"}
             <script>
                 $(function() {
                     load_file_list("{$post.post_id}","{$post.post_type}","#file_list");

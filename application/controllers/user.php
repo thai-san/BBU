@@ -1,21 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class User extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
-
-		// Load User Model First
-		$this->load->model('User_Model');
 		$this->load->model('Category_Model');
-
-		// Prepare User ID
-		if ($this->session->userdata("user_id")) {
-			$this->user_id = $this->session->userdata("user_id");
-			$this->user = $this->User_Model->detail($this->user_id);
-		} else {
-			redirect("/"); exit();
-		}
+		$this->load->model('Group_Model');
 	}
 
 	public function index() {
@@ -31,6 +21,7 @@ class User extends CI_Controller {
 
 	public function addnew() {
 		$data['menu'] = $this->Category_Model->get_list();
+		$data['groups'] = $this->Group_Model->get_list();
 		// Input validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
 		$this->form_validation->set_rules('user_name', '<b>User name</b>', 'trim|required|is_unique[users.user_name]|min_length[3]|max_length[20]|callback_username_check');
@@ -40,94 +31,59 @@ class User extends CI_Controller {
 		$this->form_validation->set_message('is_unique', 'The %s already exist');
 		
 		if ($this->form_validation->run()){
-			
 			// Prepare Date before insert
 			$data = array(
 				"user_name" => strtolower(trim($this->input->post('user_name'))),
 				"password" => md5(trim($this->input->post('password'))),
+				"group_id" => $this->input->post('group_id')
 			);
-			
 			// return user_id after insert
-			if ($user_id = $this->User_Model->insert($data)) {
-				$this->session->set_flashdata(
-					array(
-						"title" => "Create user",
-						"message" => "user <b>{$data['user_name']}</b> has been created",
-						"status" => "success"
-					)
-				);
-				// Go back to user page
-				redirect("/user/addnew");
-				exit();
-			};
+			$user_id = $this->User_Model->insert($data);
+			if ($user_id) {
+				$this->send_message("Create user", "user <b>{$data['user_name']}</b> has been created", "success");
+			
+			}else {
+				$this->send_message("Create user", "Can not create user <b>{$data['user_name']}</b> at this time", "danger");
+			}
+			// redirect user
+			$this->redirect("/user/addnew");
 		// form validate error
 		} else {
-			$this->load->model('Group_Model');
-			$data['groups'] = $this->Group_Model->get_list();
 			$this->smarty->view("user_add", $data);
 		}
 	}
 
 	public function delete() {
-		
 		// set default value user_id = 0
 		$user_id = $this->uri->segment(3, 0);
-
+		// check user id exist or not;
+		if (!$this->User_Model->row_exists($user_id)) $this->show_404();
 		// Detail user want to delete
 		$user = $this->User_Model->detail($user_id);
-		
-		// check post
-		if ($user['total_post'] > 0) {
-			// send back message
-			$this->session->set_flashdata(
-				array(
-					"title" => "Remove user",
-					"message" => "Can not delete user {$user['user_name']}. Because this user have have many post.",
-					"status" => "warning"
-				)
-			);
-			redirect("/dashboard"); exit();
-		}
-		
 		// Only Admin can delete other user;
-		if ($this->user['is_admin'] == 1) {
-			
-			// process delete user then return affect row
+		if ($this->is_admin()) {
+			// check post
+			if ($this->is_has_post($user_id)) {
+				$this->send_message("Delete User", "Can not delete user <b>{$user['user_name']}</b>. Because this user still have post.You should <b>disable</b> user instead of delete user", "warning");
+				$this->redirect("/user");
+			}
+			// process delete user
 			$affected_rows = $this->User_Model->delete($user['user_id']);
-			
+			// check result
 			if ($affected_rows > 0) {
 				// send back message
-				$this->session->set_flashdata(
-					array(
-						"title" => "Remove user",
-						"message" => "{$affected_rows} user has been deleted",
-						"status" => "success"
-					)
-				);
+				$this->send_message("Delete User", "User <b>{$user['user_name']}</b> has been deleted", "success");
 			} else {
 				// send back message
-				$this->session->set_flashdata(
-					array(
-						"title" => "Remove user",
-						"message" => "can not delete user ",
-						"status" => "warning"
-					)
-				);
+				$this->send_message("Delete User", "Can not delete user <b>{$user['user_name']}</b>", "warning");
 			}
-
+			// redirect user
+			$this->redirect("/user");
 		} else {
-			// send back message
-			$this->session->set_flashdata(
-				array(
-					"title" => "Remove user",
-					"message" => "you don't have permission to delete this user",
-					"status" => "warning"
-				)
-			);
-			
+			$this->send_message("Delete User", "You don't have permission to delete this user", "warning");
 		}
 		// redirect user
-		redirect("/dashboard"); exit();
+		$this->redirect("/dashboard");
 	}
 
 	public function username_check($user_name) {
@@ -140,76 +96,105 @@ class User extends CI_Controller {
 	}
 
 	public function groupchange() {
-
+		// get user_id from url
 		$user_id = $this->uri->segment(3,0);
-
-		if ($user_id != 0) {
-
-			$data = array(
-				'group_id' => $this->input->post('group_id')
-			);
-
-			$affect_row = $this->User_Model->update($user_id, $data);
+		// check user id
+		if (!$this->User_Model->row_exists($user_id)) $this->show_404();
+		// detail user
+		$user = $this->User_Model->detail($user_id);
+		// prepare data before update
+		$data = array(
+			'group_id' => $this->input->post('group_id')
+		);
+		// process group change
+		$affect_row = $this->User_Model->update($user_id, $data);
+		// check result
+		if ($affect_row > 0) {
+			// send back message
+			$this->send_message("Chnage User Group", "Group changed for user <b>{$user['user_name']}</b>", "success");
+		} else {
+			// send back message
+			$this->send_message("Chnage User Group", "Can not change group for user <b>{$user['user_name']}</b>", "danger");
 		}
+		// redirect user
+		$this->redirect("/dashboard/user");
+	}
 
-		redirect("/dashboard/user");
+	public function enable() {
+		// get user_id from url
+		$user_id = $this->uri->segment(3, 0);
+		$status = $this->uri->segment(4, 1);
+		// check user from database
+		if (!$this->User_Model->row_exists($user_id)) $this->show_404();
+		// detail user
+		$user = $this->User_Model->detail($user_id);
+		// is admin check
+		if (!$this->is_admin()) {
+			$this->send_message("Disable User", "Permission denied", "danger");
+			$this->redirect("/dashboard");
+		}
+		// process update
+		$affect_row = $this->User_Model->update($user_id,
+			array(
+				"is_enable" => $status
+			)
+		);
+		
+		// check result
+		if ($affect_row > 0) {
+			// send back message
+			$this->send_message("Disable User", "<b>{$user['user_name']}</b> status changed", "success");
+		} else {
+			// send back message
+			$this->send_message("Disable User", "Can not change status for user <b>{$user['user_name']}</b>", "danger");
+		}
+		$this->redirect("/user");
 	}
 
 	public function resetpwd() {
 		$data['menu'] = $this->Category_Model->get_list();
+		// get user_id from url
 		$user_id = $this->uri->segment(3, 0);
-		
-		// Input validation rule
+		// check user from database
+		if (!$this->User_Model->row_exists($user_id)) $this->show_404();
+		// detail user
+		$data['user'] = $this->User_Model->detail($user_id);
+		// setting form validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
 		$this->form_validation->set_rules('password', '<b>Password</b>', 'trim|required|matches[confirm_password]|min_length[6]|max_length[20]');
 		$this->form_validation->set_rules('confirm_password', '<b>Confirm password</b>', 'trim|required');
-
-		if ($user_id != 0) {
-			
-			$data['user'] = $this->User_Model->detail($user_id);
-
-			// process form validation
-			if ($this->form_validation->run()){
-				
-				// process change user password in database
-				$affect_row = $this->User_Model->update($user_id, array(
+		// process form validation
+		if ($this->form_validation->run()){
+			// process change user password in database
+			$affect_row = $this->User_Model->update($user_id,
+				array(
 					'password' => md5(trim($this->input->post('password')))
-				));
-
-				// check result
-				if ($affect_row > 0) {
-					// send back message
-					$this->session->set_flashdata(
-						array(
-							"title" => "Reset Password",
-							"message" => "Password has been reseted for user <b>{$data['user']['user_name']}</b>",
-							"status" => "success"
-						)
-					);
-				// can't reset password
-				} else {
-					// send back message
-					$this->session->set_flashdata(
-						array(
-							"title" => "Reset Password",
-							"message" => "Can not reset password for user <b>{$data['user']['user_name']}</b>",
-							"status" => "danger"
-						)
-					);
-				}
-
-				// redirect user
-				redirect("user/resetpwd/{$user_id}"); exit();
-			// form validate error
-			} else  {
-				//​ re-load form with alert error
-				$this->smarty->view('user_password_reset');
+				)
+			);
+			// check result
+			if ($affect_row > 0) {
+				// send back message
+				$this->send_message("Reset Password", "Password has been reseted for user <b>{$data['user']['user_name']}</b>", "success");
+			} else {
+				// send back message
+				$this->send_message("Reset Password", "Can not reset password for user <b>{$data['user']['user_name']}</b>", "danger");
 			}
-
-			$this->smarty->view('user_password_reset', $data);
+			// redirect user
+			$this->redirect("user/resetpwd/{$user_id}");
+		// form validate error
 		} else {
-			echo "page are you looking for is not found.";
+			//​ re-load form with alert error
+			$this->smarty->view('user_password_reset', $data);
 		}
+	}
+	// detect admin user
+	private function is_admin() {
+		return ($this->user['is_admin'] == 1);
+	}
+	// detect post of user
+	private function is_has_post($user_id) {
+		$user = $this->User_Model->detail($user_id);
+		return ($user['total_post'] > 0);
 	}
 
 }

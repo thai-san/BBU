@@ -1,18 +1,18 @@
 <ul class="nav nav-sidebar">
     <li {if $active eq "dashboard"}class="active"{/if}><a href="/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
 </ul>
-<!-- Admin -->
+
+<ul class="nav nav-sidebar">
+    <li {if $active eq "post_manage"}class="active"{/if}><a href="/dashboard/post"><i class="fa fa-inbox"></i> Post</a></li>
+    <li {if $active eq "category_manage"}class="active"{/if}><a href="/dashboard/category"><i class="fa fa-folder-open-o"></i> Category</a></li>
+</ul>
+
 <ul class="nav nav-sidebar">
     <li {if $active eq "user_manage"}class="active"{/if}><a href="/dashboard/user"><i class="fa fa-user"></i> User</a></li>
 </ul>
 
 <ul class="nav nav-sidebar">
     <li {if $active eq "group_manage"}class="active"{/if}><a href="/dashboard/group"><i class="fa fa-users"></i> Group</a></li>
-</ul>
-<!-- Staff -->
-<ul class="nav nav-sidebar">
-    <li {if $active eq "category_manage"}class="active"{/if}><a href="/dashboard/category"><i class="fa fa-folder-open-o"></i> Category</a></li>
-    <li {if $active eq "post_manage"}class="active"{/if}><a href="/dashboard/post"><i class="fa fa-inbox"></i> Post</a></li>
 </ul>
 
 <!-- Shadow -->

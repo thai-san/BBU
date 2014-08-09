@@ -18,6 +18,10 @@ class MY_Controller extends CI_Controller {
 		redirect($url); exit();
 	}
 
+	public function show_404() {
+		show_404(); exit();
+	}
+
 	public function send_message($title, $message, $status) {
 		return $this->session->set_flashdata(
 			array(

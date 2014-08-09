@@ -102,6 +102,7 @@
 .sidebar>ul:first-child>li>a {
     border-top: 1px solid #DFDFDF;
 }
+
 .nav-sidebar {
     margin-right: -21px; /* 20px padding + 1px border */
     margin-left: -20px;
@@ -153,4 +154,12 @@ label {
 
 .panel img{
     max-width: 100%;
+}
+
+form .btn {
+    margin-top: 10px;
+}
+
+.primary {
+    width: 50%;
 }

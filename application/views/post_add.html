@@ -8,36 +8,44 @@
     </div>
     <div class="page-content" id="page-content">
         <div class="col-md-8">
-            <h2 class="page-header"><i class="fa fa-envelope-o"></i> Add New Post</h2>
+            <h2 class="page-header"><i class="fa fa-envelope-o"></i> Create New Post</h2>
             {include file='_message.html'}
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#Image" role="tab" data-toggle="tab">Image</a></li>
-                <li><a href="#PDF" role="tab" data-toggle="tab">PDF</a></li>
-                <li><a href="#Text" role="tab" data-toggle="tab">Text</a></li>
+            <ul class="nav nav-tabs" role="tablist" id="form_tab">
+                <li><a href="#image" role="tab" data-toggle="tab">Image</a></li>
+                <li><a href="#pdf" role="tab" data-toggle="tab">PDF</a></li>
+                <li><a href="#text" role="tab" data-toggle="tab">Text</a></li>
             </ul>
-
+            {if $smarty.get.tab eq 'text'}
+            <script> $(function () { $('#form_tab a[href="#text"]').tab('show'); }); </script>
+            {else if $smarty.get.tab eq 'pdf'}
+            <script> $(function () { $('#form_tab a[href="#pdf"]').tab('show'); }); </script>
+            {else}
+            <script> $(function () { $('#form_tab a[href="#image"]').tab('show'); }); </script>
+            {/if}
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="tab-pane active" id="Image">
-                    {form_open_multipart("/post/addnew/image")}
+                <div class="tab-pane active" id="image">
+                    {form_open_multipart("/post/addnew/image?tab=image")}
+                        
                         <div class="form-group">
                             <label>Title</label>
                             <input type='text' class="form-control input-lg" name='post_title' value='{set_value("post_title")}' required autofocus>
                         </div>
+
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group" id="post_type_image">
-                                    <label for="expire_date">Category</label>
-                                    <select name="category" id="category" class="form-control input-lg">
+                                <div class="form-group">
+                                    <label for="category_id">Category</label>
+                                    <select name="category_id" id="category_id" class="form-control input-lg">
                                         {foreach from=$categories item=item}
-                                        <option value="{$item.category_id}">{$item.category_name}</option>
+                                        <option value="{$item.category_id}" {set_select("category_id", $item.category_id)}>{$item.category_name}</option>
                                         {/foreach}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group" id="post_type_image">
+                                <div class="form-group">
                                     <label for="expire_date">Expire Date</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control datepicker input-lg" name="expire_date" id="expire_date" value='{set_value("expire_date")}' required>
@@ -46,29 +54,44 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="input_type_image">Choose Image</label>
                             <input id="input_type_image" class="form-control input-lg" name="input_type_image[]" type="file" multiple required accept="image/*">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group center">
                             <input type='submit' class="btn btn-primary" name='submit' value='Publish'>
                         </div>
+
                     {form_close()}
                 </div>
-                <div class="tab-pane" id="PDF">
-                    {form_open_multipart("/post/addnew/pdf")}
+                <div class="tab-pane" id="pdf">
+                    {form_open_multipart("/post/addnew/pdf?tab=pdf")}
                         <div class="form-group">
                             <label>Title</label>
                             <input type='text' class="form-control input-lg" name='post_title' value='{set_value("post_title")}' required autofocus>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="expire_date">Expire Date</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control datepicker input-lg" name="expire_date" id="expire_date" value='{set_value("expire_date")}' required>
-                                <span class="input-group-addon"><i class="fa fa-calendar-o"></i>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category_id">Category</label>
+                                    <select name="category_id" id="category_id" class="form-control input-lg">
+                                        {foreach from=$categories item=item}
+                                        <option value="{$item.category_id}" {set_select("category_id", $item.category_id)}>{$item.category_name}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="expire_date">Expire Date</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control datepicker input-lg" name="expire_date" id="expire_date" value='{set_value("expire_date")}' required>
+                                        <span class="input-group-addon"><i class="fa fa-calendar-o"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -81,26 +104,45 @@
                         </div>
                     {form_close()}
                 </div>
-                <div class="tab-pane" id="Text">
-                    {form_open_multipart("/post/addnew/text")}
+                <div class="tab-pane" id="text">
+                    {form_open_multipart("/post/addnew/text?tab=text")}
+
                         <div class="form-group">
                             <label>Title</label>
                             <input type='text' class="form-control input-lg" name='post_title' value='{set_value("post_title")}' required autofocus>
                         </div>
-                        <div class="form-group">
-                            <label for="expire_date">Expire Date</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control datepicker input-lg" name="expire_date" id="expire_date" value='{set_value("expire_date")}' required>
-                                <span class="input-group-addon"><i class="fa fa-calendar-o"></i>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category_id">Category</label>
+                                    <select name="category_id" id="category_id" class="form-control input-lg">
+                                        {foreach from=$categories item=item}
+                                        <option value="{$item.category_id}" {set_select("category_id", $item.category_id)}>{$item.category_name}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="expire_date">Expire Date</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control datepicker input-lg" name="expire_date" id="expire_date" value='{set_value("expire_date")}' required>
+                                        <span class="input-group-addon"><i class="fa fa-calendar-o"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label>Description</label>
                             <textarea id="input_type_text" class="form-control" name='post_description' cols='60' rows='10'>{set_value("post_content")}</textarea>
                         </div>
+
                         <div class="form-group">
                             <input type='submit' class="btn btn-primary" name='submit' value='Publish'>
                         </div>
+                        
                     {form_close()}
                 </div>
             </div>

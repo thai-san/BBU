@@ -36,11 +36,11 @@ function load_file_list (post_id, type, element) {
 }
 
 $(function() {
-    $('#tab').tab('show');
     $(".bs-callout").slideDown();
     $(".datepicker").datepicker({
         format: "yyyy-mm-dd",
         todayHighlight: true,
-        todayBtn: "linked"
+        todayBtn: "linked",
+        startDate: new Date()
     });
 })

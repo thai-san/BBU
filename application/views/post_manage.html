@@ -14,7 +14,7 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th style="width:50%">Post Title</th>
+                        <th class="primary">Post Title</th>
                         <th>Create Date</th>
                         <th>Expire Date</th>
                         <th>Author</th>
@@ -35,7 +35,7 @@
                         <td>
                             <a href="/home/post/{$item.post_id}" target="_blank">View</a> |
                             <a href="/dashboard/editpost/{$item.post_id}">Edit</a> |
-                            <a href="/dashboard/deletepost/{$item.post_id}">Delete</a>
+                            <a href="/dashboard/deletepost/{$item.post_id}" onclick="return confirm('Are you sure want to delete this post ?')">Delete</a>
                         </td>
                     </tr>
                 {/foreach}

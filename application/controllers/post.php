@@ -24,15 +24,19 @@ class Post extends MY_Controller {
 	}
 
 	public function addnew() {
-		
 		$post_type = $this->uri->segment(3, "image");
-		
+		// setting form validation
+		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');				// error message html tage
+		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
+		$this->form_validation->set_rules('expire_date', '<b>Expire Date</b>', 'required'); // rule for expire date
+		$this->form_validation->set_rules('category_id', '<b>Category</b>', 'required');    // rule for category id
 		switch ($post_type) {
-			case 'pdf':
-				$this->post_type_pdf(); // post_type pdf
-				break;
 			case 'text':
-				$this->post_type_text(); // post_type text
+				$this->form_validation->set_rules('post_description', '<b>Description</b>', 'required'); 		// rule for Description;
+				$this->insert_post_type_text(); // post_type text
+				break;
+			case 'pdf':
+				$this->insert_post_type_pdf(); // post_type pdf
 				break;
 			default:
 				$this->insert_post_type_image(); // post_type image
@@ -40,37 +44,34 @@ class Post extends MY_Controller {
 	}
 
 	public function update() {
-		
+		// get post id from url
 		$post_id = $this->uri->segment(3, 0);
-		
-		// Check Post exists
-		if ($this->Post_Model->row_exists($post_id)) {
-			
-			$post = $this->Post_Model->detail($post_id);
-			
-			switch ($post['post_type']) {
-				case 'TEXT':
-					$this->update_post_type_text($post_id); // post_type text
-					break;
-				case 'PDF':
-					$this->update_post_type_pdf($post_id); // post_type pdf
-					break;
-				default:
-					$this->update_post_type_image($post_id); // post_type image
-			}
-		// No post exist
-		} else {
-			show_404(); exit();
+		// check Post exists
+		if (!$this->Post_Model->row_exists($post_id)) $this->show_404();
+		// detail post
+		$post = $this->Post_Model->detail($post_id);
+		// setup rule for differance post_type
+		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');				// error message html tage
+		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
+		$this->form_validation->set_rules('expire_date', '<b>Expire Date</b>', 'required'); // rule for expire date
+		$this->form_validation->set_rules('category_id', '<b>Category</b>', 'required');    // rule for category id
+		// check post type
+		switch ($post['post_type']) {
+			case 'TEXT':
+				$this->form_validation->set_rules('post_description', '<b>Description</b>', 'required'); 		// rule for title
+				$this->update_post_type_text($post_id); // post_type text
+				break;
+			case 'PDF':
+				$this->update_post_type_pdf($post_id); // post_type pdf
+				break;
+			default:
+				$this->update_post_type_image($post_id); // post_type image
 		}
 	}
 
-	public function insert_post_type_image(){
-		// get menu
+	private function insert_post_type_image(){
 		$data['menu'] = $this->Category_Model->get_list();
-		// setup rule for differance post_type
-		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>'); // Error HTML Tage
-		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
-		$this->form_validation->set_rules('expire_date', '<b>Expire Date</b>', 'required');  // rule for title
+		$data["categories"] = $this->Category_Model->get_list();
 		// process form validation
 		if ($this->form_validation->run()) {
 			// if file was upload
@@ -80,6 +81,7 @@ class Post extends MY_Controller {
 				$data = array(
 					"post_title" => trim($this->input->post('post_title')),
 					"post_type" => "IMAGE",
+					"category_id" => $this->input->post('category_id'),
 					"expire_date" => $this->input->post('expire_date'),
 					"owner" => $this->session->userdata("user_id")
 				);
@@ -112,8 +114,8 @@ class Post extends MY_Controller {
 						}
 					}
 					// redirect user to edit post/post_id
-					$this->redirect("/dashboard/editpost/{$post_id}"); 
-					// insert fail
+					$this->redirect("/post/update/{$post_id}"); 
+				// insert fail
 				} else {
 					// send messsage back to user
 					$this->send_message("Create new post", "Can not create new post. Please try again", "warning");
@@ -122,45 +124,37 @@ class Post extends MY_Controller {
 				}
 			//image upload error
 			} else { 
-				$error = array('error' => $this->upload->display_errors());
-				$this->smarty->view("post_add", $error);
+				$data['error'] = $this->upload->display_errors();
+				$this->smarty->view("post_add", $data);
 			}
 		// form validate error
 		} else {
-			$data["categories"] = $this->Category_Model->get_list();
 			$this->smarty->view("post_add", $data);
 		}
 	}
 
-	public function post_type_pdf() {
+	private function insert_post_type_pdf() {
 		$data['menu'] = $this->Category_Model->get_list();
-
-		// setting up form validation rule
-		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
-		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
-		
+		$data["categories"] = $this->Category_Model->get_list();
+		// process form validation
 		if ($this->form_validation->run()) {
-			
 			if ($this->process_file_upload('input_type_pdf', 'PDF')) {
-				
+				// prepare data before input to database
 				// prepare data before input to database
 				$data = array(
-					"post_title" => $this->input->post('post_title'),
+					"post_title" => trim($this->input->post('post_title')),
 					"post_type" => "PDF",
+					"category_id" => $this->input->post('category_id'),
+					"expire_date" => $this->input->post('expire_date'),
 					"owner" => $this->session->userdata("user_id")
 				);
-				
 				// insert post data to database return post_id
 				$post_id = $this->Post_Model->insert($data);
-
 				// if have post_id it mean new post is success input
 				if ($post_id) {
-					
 					// send messsage back to user
 					$this->send_message("Add new post", "a post added", "success");
-			
 					foreach ($this->upload->get_multi_upload_data() as $file) {
-
 						// Attach file_owner
 						$file['file_owner'] = $this->user["user_id"];
 						// insert to Files Table
@@ -173,40 +167,35 @@ class Post extends MY_Controller {
 							)
 						);
 					}
-
 					// redirect user to edit post/post_id
 					$this->redirect("/dashboard/editpost/{$post_id}"); 
 				}
-
 			//image upload error
 			} else { 
-				$error = array('error' => $this->upload->display_errors());
-				$this->smarty->view("post_add", $error);
+				$data['error'] = $this->upload->display_errors();
+				$this->smarty->view("post_add", $data);
 			}
 		// form validate error
 		} else {
-			$this->smarty->view("post_add");
+			$this->smarty->view("post_add", $data);
 		}
 	}
 
-	public function post_type_text() {
+	private function insert_post_type_text() {
 		$data['menu'] = $this->Category_Model->get_list();
-		
-		// setup rule for differance post_type
-		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
-		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
-		$this->form_validation->set_rules('post_description', '<b>Description</b>', 'required'); 	// rule for title
-		
+		$data["categories"] = $this->Category_Model->get_list();
 		// Process for validation
 		if ($this->form_validation->run()) {
-			// prepare data before insert to database
+			// prepare data before input to database
 			$data = array(
-				'post_title' => $this->input->post('post_title'),
-				'post_type' => "TEXT",
-				'post_description' => $this->input->post('post_description'),
-				'owner' => $this->session->userdata("user_id")
+				"post_title" => trim($this->input->post('post_title')),
+				"post_type" => "TEXT",
+				"category_id" => $this->input->post('category_id'),
+				"post_description" => trim($this->input->post('post_description')),
+				"expire_date" => $this->input->post('expire_date'),
+				"owner" => $this->session->userdata("user_id")
 			);
-			
+
 			$post_id = $this->Post_Model->insert($data);
 
 			if ($post_id) {
@@ -222,29 +211,32 @@ class Post extends MY_Controller {
 			}
 		// form validation error
 		} else {
-			$this->smarty->view('post_add'); 
+			$this->smarty->view('post_add', $data); 
 		}
 	}
 
-	private function update_post_type_image() {
+	private function update_post_type_image($post_id) {
 		$data['menu'] = $this->Category_Model->get_list();
-		
-		$post_id = $this->uri->segment(3, 0);
-		// setting form validation rule
-		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
-		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'trim|required');
-		$this->form_validation->set_rules('expire_date', '<b>Expire Date</b>', 'trim|required');
-		
+		$data["post"] = $this->Post_Model->detail($post_id);
+		$data["categories"] = $this->Category_Model->get_list();
 		// process form validation
 		if ($this->form_validation->run()) {
 			// prepare data before input to database
 			$data = array(
-				'post_title' => $this->input->post('post_title'),
-				'expire_date' => $this->input->post('expire_date')
+				"post_title" => trim($this->input->post('post_title')),
+				"category_id" => $this->input->post('category_id'),
+				"expire_date" => $this->input->post('expire_date')
 			);
-
+			// process update
 			$affect_row = $this->Post_Model->update($post_id, $data);
 			
+			if ($affect_row > 0) {
+				// send messsage back to user
+				$this->send_message("Edit Post", "{$affect_row} post updated", "success");
+			} else {
+				// send messsage back to user
+				$this->send_message("Edit Post", "{$affect_row} post updated", "warning");
+			}
 			// check if user add new file
 			if ($_FILES['input_type_image']) {
 				// check if file upload or not
@@ -269,99 +261,85 @@ class Post extends MY_Controller {
 					}
 				}
 			}
-			
-			if ($affect_row > 0) {
-				// send messsage back to user
-				$this->send_message("Edit Post", "{$affect_row} post updated", "success");
-			}
-
 			// redirect user to post_edit
 			$this->redirect("/dashboard/editpost/{$post_id}"); 
 		// form validate error
 		} else {
 			// load edit post with alert error
-			$data["post"] = $this->Post_Model->detail($post_id);
-			$data["files"] = $this->get_post_file($post_id, $data["post"]['post_type']);
 			$this->smarty->view("post_edit", $data);
 		}
 	}
 	
-	public function update_post_type_pdf() {
+	private function update_post_type_pdf($post_id) {
 		$data['menu'] = $this->Category_Model->get_list();
-		
-		$post_id = $this->uri->segment(3, 0);
-		// setting form validation rule
-		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
-		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'trim|required');
-		
+		$data["post"] = $this->Post_Model->detail($post_id);
+		$data["categories"] = $this->Category_Model->get_list();
 		// process form validation
 		if ($this->form_validation->run()) {
 			// prepare data before input to database
 			$data = array(
-				'post_title' => $this->input->post('post_title')
+				"post_title" => trim($this->input->post('post_title')),
+				"category_id" => $this->input->post('category_id'),
+				"expire_date" => $this->input->post('expire_date')
 			);
-
+			// process update
 			$affect_row = $this->Post_Model->update($post_id, $data);
-			
-			// check if user add new file
-			if ($_FILES['input_type_pdf']) {
-				// check if file upload or not
-				if ($this->process_file_upload('input_type_pdf', 'pdf')) {
-			
-					// manage image location
-					$directory = UPLOAD_PATH . $post_id;
-					// manage thumnail location
-					// process all pdf
-					foreach ($this->upload->get_multi_upload_data() as $file) {
-						// prepare location
-						$file_path = UPLOAD_PATH . $file['file_name'];
-						$new_path = $directory . "/" . $file['file_name'];
-
-						// move to into post_id/
-						$this->move_file($file_path, $new_path);
-					}
-				}
-			}
-			
+			// check result
 			if ($affect_row > 0) {
 				// send messsage back to user
 				$this->send_message("Edit Post", "{$affect_row} post updated", "success");
 			} else {
+				// send messsage back to user
 				$this->send_message("Edit Post", "{$affect_row} post updated", "warning");
 			}
 
+			// check if user add new file
+			if ($_FILES['input_type_pdf']) {
+				// check if file upload or not
+				if ($this->process_file_upload('input_type_pdf', 'pdf')) {
+					// process all pdf
+					foreach ($this->upload->get_multi_upload_data() as $file) {
+						// Attach file_owner
+						$file['file_owner'] = $this->user["user_id"];
+						// insert to Files Table
+						$file_id = $this->File_Model->insert($file);
+						// insert to table attach ment
+						if ($file_id) {
+							// insert to Attachement Table
+							$this->Attachment_Model->insert(
+								array(
+									"post_id" => $post_id,
+									"file_id" => $file_id
+								)
+							);
+						}
+					}
+				}
+			}
 			// redirect user to post_edit
 			$this->redirect("/dashboard/editpost/{$post_id}"); 
 		// form validate error
 		} else {
-			// load edit post with alert error
-			$data["post"] = $this->Post_Model->detail($post_id);
-			$data["files"] = $this->get_post_file($post_id, $data["post"]['post_type']);
 			$this->smarty->view("post_edit", $data);
 		}
 	}
 	
-	public function update_post_type_text() {
+	private function update_post_type_text($post_id) {
 		$data['menu'] = $this->Category_Model->get_list();
-		
-		// setup rule for differance post_type
-		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
-		$this->form_validation->set_rules('post_title', '<b>Title</b>', 'required'); 		// rule for title
-		$this->form_validation->set_rules('post_description', '<b>Description</b>', 'required'); 	// rule for title
-		
+		$data["post"] = $this->Post_Model->detail($post_id);
+		$data["categories"] = $this->Category_Model->get_list();
 		// Process for validation
 		if ($this->form_validation->run()) {
-			
 			// prepare data before insert to database
 			$data = array(
-				'post_title' => $this->input->post('post_title'),
-				'post_type' => "TEXT",
-				'post_description' => $this->input->post('post_description'),
-				'owner' => $this->session->userdata("user_id")
+				"post_title" => trim($this->input->post('post_title')),
+				"category_id" => $this->input->post('category_id'),
+				"expire_date" => $this->input->post('expire_date'),
+				"post_description" => $this->input->post('post_description')
 			);
-			
+			// process update
 			$affect_row = $this->Post_Model->update($post_id, $data);
-
+			// check result 
 			if ($affect_row > 0) {
 				// send messsage back to user
 				$this->send_message("Edit Post", "{$affect_row} post updated", "success");
@@ -379,47 +357,29 @@ class Post extends MY_Controller {
 		}
 	}
 
-	public function get_post_file($post_id, $post_type) {
-		$files = array();
-		switch ($post_type) {
-			case "IMAGE":
-					$files = directory_map("./uploads/{$post_id}/thumbnail/");
-				break;
-			case "PDF":
-					$files = directory_map("./uploads/{$post_id}/");
-				break;
-		}
-		return $files;
-	}
-
 	public function deletepost() {
-
+		// get post_id in url
 		$post_id = $this->uri->segment(3, 0);
-
-		if($post_id != 0) {
-			// if user in the same group then can delete post
-			$this->load->model('User_Model');
-			$user = $this->User_Model->detail($this->user_id);
-			$post = $this->Post_Model->detail($post_id);
-
-			// check is post & user in same group or admin
-			if ($user['group_id'] == $post['group_id'] || $user['is_admin'] == 1)  {
-				
-				// process delete post
-				$affect_row = $this->Post_Model->delete($post_id);
-
+		// check Post exists
+		if (!$this->Post_Model->row_exists($post_id)) $this->show_404();
+		// if user in the same group then can delete post
+		$post = $this->Post_Model->detail($post_id);
+		// check is post & user in same group or admin
+		if ($this->user['group_id'] == $post['group_id'] || $user['is_admin'] == 1)  {
+			// process delete post
+			$affect_row = $this->Post_Model->delete($post_id);
+			if ($affect_row>0) {
 				// send message
 				$this->send_message("Delete Post", "{$affect_row} post deleted", "success");
-			// no permission to delete
 			} else {
-				$this->send_message("Delete Post", "U don't have permission to delete this post", "success");
+				// send message
+				$this->send_message("Delete Post", "{$affect_row} post deleted", "warning");
 			}
-
-			$this->redirect("/post"); 
-
+		// no permission to delete
 		} else {
-			show_error('Sorry! Page are you looking for is not found.', 404);
+			$this->send_message("Delete Post", "U don't have permission to delete this post", "success");
 		}
+		$this->redirect("/post");
 	}
 
 	public function files($post_id, $type) {
@@ -500,7 +460,7 @@ class Post extends MY_Controller {
 		
 		$config['upload_path'] = UPLOAD_PATH;
 		$config['encrypt_name'] = TRUE;
-		$config['max_size']	= '200'; // KB
+		$config['max_size']	= '5120'; // KB
 
 		switch ($type) {
 			case 'IMAGE':

@@ -1,10 +1,10 @@
 {foreach from=$files item=item}
     <div class="media">
         <div class="pull-left">
-            <i class="media-object fa fa-file-pdf-o fa-4x"></i>
+            <i class="media-object fa fa-file-pdf-o fa-3x"></i>
         </div>
         <div class="media-body">
-            <p class="file-name">{$item.orig_name}</p>
+            <div class="file-name">{$item.orig_name}</div>
             <a href="{$smarty.const.VUPLOAD_PATH}{$item.file_name}" target="_blank">View</a> |
             <a href="{$smarty.const.VUPLOAD_PATH}{$item.file_name}" download>Download</a> |
             <a href="/post/deletefile/{$item.post_id}/{$item.file_id}/{$item.attachment_id}" onclick="return confirm('Are you sure want to delete {$item.orig_name} ?')">Delete</a>
