@@ -76,7 +76,6 @@ class Post extends MY_Controller {
 		if ($this->form_validation->run()) {
 			// if file was upload
 			if ($this->process_file_upload('input_type_image', 'IMAGE')) {
-
 				// prepare data before input to database
 				$data = array(
 					"post_title" => trim($this->input->post('post_title')),
@@ -85,7 +84,6 @@ class Post extends MY_Controller {
 					"expire_date" => $this->input->post('expire_date'),
 					"owner" => $this->session->userdata("user_id")
 				);
-
 				// insert post data to database return post_id
 				$post_id = $this->Post_Model->insert($data);
 				// check insert result
@@ -365,7 +363,7 @@ class Post extends MY_Controller {
 		// if user in the same group then can delete post
 		$post = $this->Post_Model->detail($post_id);
 		// check is post & user in same group or admin
-		if ($this->user['group_id'] == $post['group_id'] || $user['is_admin'] == 1)  {
+		if ($this->user['group_id'] == $post['group_id'] || $this->user['is_admin'] == 1)  {
 			// process delete post
 			$affect_row = $this->Post_Model->delete($post_id);
 			if ($affect_row>0) {
@@ -377,7 +375,7 @@ class Post extends MY_Controller {
 			}
 		// no permission to delete
 		} else {
-			$this->send_message("Delete Post", "U don't have permission to delete this post", "success");
+			$this->send_message("Delete Post", "U don't have permission to delete this post", "danger");
 		}
 		$this->redirect("/post");
 	}

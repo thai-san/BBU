@@ -43,7 +43,11 @@
                     <a href="/user/resetpwd/{$item.user_id}">Reset Password</a> |
                     <a href="/user/delete/{$item.user_id}" onclick="return confirm('Are you sure want to delete user {$item.user_name} ?')">Delete</a> |
                     <label class="checkbox-inline">
-                        <input type="checkbox" {if $item.is_enable eq 0} checked {/if} value="{$item.user_id}" onchange="window.location='/user/enable/{$item.user_id}/{$item.is_enable}'"> Disable
+                        {if $item.is_enable eq 0}
+                        <input type="checkbox" checked value="{$item.user_id}" onchange="window.location='/user/enable/{$item.user_id}/1'"> Disable
+                        {else}
+                        <input type="checkbox" value="{$item.user_id}" onchange="window.location='/user/enable/{$item.user_id}/0'"> Disable
+                        {/if}
                     </label>
                     {/if}
                 </td>

@@ -126,29 +126,65 @@ class User extends MY_Controller {
 		$status = $this->uri->segment(4, 1);
 		// check user from database
 		if (!$this->User_Model->row_exists($user_id)) $this->show_404();
-		// detail user
-		$user = $this->User_Model->detail($user_id);
-		// is admin check
+		// // is admin check
 		if (!$this->is_admin()) {
-			$this->send_message("Disable User", "Permission denied", "danger");
+			$this->send_message("Change User Status", "Permission denied", "danger");
 			$this->redirect("/dashboard");
 		}
+		// prepare data before input
+		$data = array('is_enable' => $status);
 		// process update
-		$affect_row = $this->User_Model->update($user_id,
-			array(
-				"is_enable" => $status
-			)
-		);
-		
+		$affect_row = $this->User_Model->update($user_id, $data);
 		// check result
 		if ($affect_row > 0) {
-			// send back message
-			$this->send_message("Disable User", "<b>{$user['user_name']}</b> status changed", "success");
+			$user = $this->User_Model->detail($user_id);
+			if ($user['is_enable'] == 1) {
+				// send back message
+				$this->send_message("Change User Status", "User <b>{$user['user_name']}</b> status change to <b>enable</b>", "success");
+			} else {
+				// send back message
+				$this->send_message("Change User Status", "User <b>{$user['user_name']}</b> status change to <b>disable</b>", "success");
+			}
 		} else {
 			// send back message
-			$this->send_message("Disable User", "Can not change status for user <b>{$user['user_name']}</b>", "danger");
+			$this->send_message("Change User Status", "Can not change status for user <b>{$user['user_name']}</b>", "danger");
 		}
 		$this->redirect("/user");
+	}
+
+	public function changepwd() {
+		$data['menu'] = $this->Category_Model->get_list();
+		// check user from database
+		if (!$this->User_Model->row_exists($this->user_id)) $this->show_404();
+		$data['user'] = $this->user;
+		// setting form validation rule
+		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
+		$this->form_validation->set_rules('old_password', '<b>Confirm password</b>', 'trim|required');
+		$this->form_validation->set_rules('password', '<b>New Password</b>', 'trim|required|matches[confirm_password]|min_length[6]|max_length[20]');
+		$this->form_validation->set_rules('confirm_password', '<b>Confirm New password</b>', 'trim|required');
+		// Process form validation
+		if ($this->form_validation->run()){
+			// Check old password
+			if ($this->user['password'] != md5(trim($this->input->post('old_password')))) {
+				$this->send_message("Change Password", "Incorect <b>Old Password</b>", "danger");
+				$this->redirect("/user/changepwd");
+			}
+			// prepare data before update to database
+			$data = array(
+				"password" => md5(trim($this->input->post('password')))
+			);
+			// process update
+			$affect_row = $this->User_Model->update($this->user_id, $data);
+			// check result 
+			if ($affect_row > 0) {
+				$this->send_message("Change Password", "You password has been changed", "success");
+			} else {
+				$this->send_message("Change Password", "You password has been changed", "danger");
+			}
+			// redirect user
+			$this->redirect("/user/changepwd");
+		}
+		$this->smarty->view("user_change_password", $data);
 	}
 
 	public function resetpwd() {

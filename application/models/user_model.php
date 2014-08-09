@@ -80,7 +80,6 @@ SQL;
 
 		return $res->row_array();
 	}
-
 }
 
 /* End of file user_model.php */
