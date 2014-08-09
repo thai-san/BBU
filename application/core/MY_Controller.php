@@ -31,4 +31,9 @@ class MY_Controller extends CI_Controller {
 			)
 		);
 	}
+
+	// detect admin user
+	public function is_admin() {
+		return ($this->user['is_admin'] == 1);
+	}
 }

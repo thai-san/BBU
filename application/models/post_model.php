@@ -32,6 +32,7 @@ SQL;
 SELECT
 	p.*,
 	u.user_name,
+	c.category_name,
 	(
 		SELECT
 			COUNT(*) AS total_visitor
@@ -43,6 +44,7 @@ SELECT
 FROM
 	posts p
 	INNER JOIN users u ON (u.user_id = p.owner)
+	LEFT JOIN categories c ON (c.category_id = p.category_id)
 SQL;
 
 		$res = $this->db->query(
@@ -61,6 +63,7 @@ SELECT
 	u.user_name,
 	u.group_id,
 	g.group_name,
+	c.category_name,
 	(
 		SELECT
 			COUNT(*) AS total_visitor
@@ -73,6 +76,7 @@ FROM
 	posts p
 	INNER JOIN users u on (u.user_id = p.owner)
 	INNER JOIN groups g on (g.group_id = u.group_id)
+	LEFT JOIN categories c ON (c.category_id = p.category_id)
 WHERE
 	u.group_id = ?
 SQL;

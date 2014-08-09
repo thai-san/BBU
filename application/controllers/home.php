@@ -148,6 +148,7 @@ class Home extends CI_Controller {
 			$this->session->set_userdata("user_name", $result['user_name']);
 			$this->session->set_userdata("group_id", $result['group_id']);
 			$this->session->set_userdata("group_name", $result['group_name']);
+			$this->session->set_userdata("is_admin", $result['is_admin']);
 			$status = array('status' => "OK", 'url' => "/dashboard");
 		} else {
 			$status = array('status' => "FAIL", 'url' => "/login", "user" => $user_name , "pwd" => $password);

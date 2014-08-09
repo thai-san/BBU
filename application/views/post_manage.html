@@ -14,7 +14,8 @@
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="primary">Post Title</th>
+                        <th style="width:35%">Post Title</th>
+                        <th>Category</th>
                         <th>Create Date</th>
                         <th>Expire Date</th>
                         <th>Author</th>
@@ -27,6 +28,7 @@
                 {foreach from=$posts item=item}
                     <tr>
                         <td>{$item.post_title}</td>
+                        <td>{$item.category_name}</td>
                         <td title="{$item.post_date}">{$item.post_date|date_format:'%Y-%m-%d'}</td>
                         <td>{$item.expire_date}</td>
                         <td>{$item.user_name}</td>

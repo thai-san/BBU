@@ -9,6 +9,10 @@ class User extends MY_Controller {
 	}
 
 	public function index() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		$data['menu'] = $this->Category_Model->get_list();
 		// Load All user
 		$data['users'] = $this->User_Model->manage();
@@ -20,6 +24,10 @@ class User extends MY_Controller {
 	}
 
 	public function addnew() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		}
 		$data['menu'] = $this->Category_Model->get_list();
 		$data['groups'] = $this->Group_Model->get_list();
 		// Input validation rule
@@ -54,6 +62,10 @@ class User extends MY_Controller {
 	}
 
 	public function delete() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		// set default value user_id = 0
 		$user_id = $this->uri->segment(3, 0);
 		// check user id exist or not;
@@ -96,6 +108,10 @@ class User extends MY_Controller {
 	}
 
 	public function groupchange() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		// get user_id from url
 		$user_id = $this->uri->segment(3,0);
 		// check user id
@@ -121,6 +137,10 @@ class User extends MY_Controller {
 	}
 
 	public function enable() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		// get user_id from url
 		$user_id = $this->uri->segment(3, 0);
 		$status = $this->uri->segment(4, 1);
@@ -188,6 +208,10 @@ class User extends MY_Controller {
 	}
 
 	public function resetpwd() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		$data['menu'] = $this->Category_Model->get_list();
 		// get user_id from url
 		$user_id = $this->uri->segment(3, 0);
@@ -222,10 +246,6 @@ class User extends MY_Controller {
 			//​ re-load form with alert error
 			$this->smarty->view('user_password_reset', $data);
 		}
-	}
-	// detect admin user
-	private function is_admin() {
-		return ($this->user['is_admin'] == 1);
 	}
 	// detect post of user
 	private function is_has_post($user_id) {

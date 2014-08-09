@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class Group extends CI_Controller {
+class Group extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -13,12 +13,20 @@ class Group extends CI_Controller {
 	}
 
  	public function index() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		$data['menu'] = $this->Category_Model->get_list();
  		$data['groups'] = $this->Group_Model->manage();
  		$this->smarty->view('group_manage', $data);
  	}
  	
  	public function addnew() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		$data['menu'] = $this->Category_Model->get_list();
  		// setting up validation rule
 		$this->form_validation->set_error_delimiters('<li><p>', '</p></li>');
@@ -76,6 +84,10 @@ class Group extends CI_Controller {
 	}
 
 	public function edit() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		$data['menu'] = $this->Category_Model->get_list();
 		$group_id = $this->uri->segment(3, 0);
 
@@ -134,6 +146,10 @@ class Group extends CI_Controller {
 
 
 	public function delete() {
+		if(!$this->is_admin()) {
+			$this->send_message("User Access", "Access denied.","warning");
+			$this->redirect("/dashboard");
+		} 
 		$group_id = $this->uri->segment(3, 0);
 		
 		if ($group_id != 0) {
@@ -165,7 +181,6 @@ class Group extends CI_Controller {
 		// redirect user
 		redirect("/dashboard/group"); exit();
 	}
-
  }
  
  /* End of file group.php */
