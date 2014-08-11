@@ -8,4 +8,6 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 !.gitkeep
-uploads/*
+
+webroot/uploads/*.*
+webroot/uploads/thumbnail/*.*

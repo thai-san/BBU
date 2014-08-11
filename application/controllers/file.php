@@ -1,6 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class File extends CI_Controller {
+class File extends MY_Controller {
+
+	public function __construct() {
+		parent::__construct();
+		$this->load->model('File_model');
+	}
+
 
 }
 
